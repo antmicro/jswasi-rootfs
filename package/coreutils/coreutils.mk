@@ -6,6 +6,6 @@ COREUTILS_SRC_ZIP := $(BUILD_DIR)/$(COREUTILS_SRC_REV).zip
 COREUTILS_SRC_DIR := $(BUILD_DIR)/coreutils-$(COREUTILS_SRC_REV)
 
 COREUTILS_TARGET := $(COREUTILS_SRC_DIR)/target/wasm32-wasi/release/coreutils.wasm
-COREUTILS_DIST := $(OUT_DIR)/coreutils
+COREUTILS_DIST := $(RESOURCES_DIR)/coreutils
 
 $(eval $(call cargo-package,COREUTILS))

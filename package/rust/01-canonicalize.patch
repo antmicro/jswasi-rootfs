@@ -1,0 +1,47 @@
+diff --git a/library/std/src/sys/wasi/fs.rs b/library/std/src/sys/wasi/fs.rs
+index d4866bbc32b..8670e9c8e15 100644
+--- a/library/std/src/sys/wasi/fs.rs
++++ b/library/std/src/sys/wasi/fs.rs
+@@ -1,6 +1,7 @@
+ #![deny(unsafe_op_in_unsafe_fn)]
+ 
+ use super::fd::WasiFd;
++use crate::env;
+ use crate::ffi::{CStr, OsStr, OsString};
+ use crate::fmt;
+ use crate::io::{self, BorrowedCursor, IoSlice, IoSliceMut, SeekFrom};
+@@ -649,10 +650,30 @@ fn metadata_at(fd: &WasiFd, flags: wasi::Lookupflags, path: &Path) -> io::Result
+     Ok(FileAttr { meta })
+ }
+ 
+-pub fn canonicalize(_p: &Path) -> io::Result<PathBuf> {
+-    // This seems to not be in wasi's API yet, and we may need to end up
+-    // emulating it ourselves. For now just return an error.
+-    unsupported()
++pub fn canonicalize(p: &Path) -> io::Result<PathBuf> {
++    fn __canonicalize(path: &Path, buf: &mut PathBuf) {
++        if path.is_absolute() {
++            buf.clear();
++        }
++        for part in path {
++            if part == ".." {
++                buf.pop();
++            } else if part != "." {
++                buf.push(part);
++                if let Ok(linkpath) = buf.read_link() {
++                    buf.pop();
++                    __canonicalize(&linkpath, buf);
++                }
++            }
++        }
++    }
++    let mut path = if p.is_absolute() {
++        PathBuf::new()
++    } else {
++        PathBuf::from(env::current_dir()?)
++    };
++    __canonicalize(p, &mut path);
++    Ok(path)
+ }
+ 
+ fn open_at(fd: &WasiFd, path: &Path, opts: &OpenOptions) -> io::Result<File> {
