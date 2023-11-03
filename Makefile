@@ -4,7 +4,7 @@ DIST_DIR ?= $(WORK_DIR)/dist
 RESOURCES_DIR ?= $(DIST_DIR)/resources
 BUILD_DIR := $(WORK_DIR)/build
 
-PACKAGES := rust wasi-sdk coreutils wasibox space-invaders kibi ox
+PACKAGES := rust wasi-sdk coreutils wasibox space-invaders kibi ox wash
 
 include ./package/patch-sources.mk
 include ./package/cargo-package.mk
