@@ -1,0 +1,105 @@
+diff --git a/src/main.rs b/src/main.rs
+index 28a235b..b7f20a0 100644
+--- a/src/main.rs
++++ b/src/main.rs
+@@ -57,7 +57,7 @@ pub struct Config {
+ 
+ 
+ fn load_config() -> Config {
+-    let config = ini::Ini::load_from_file("config.ini").unwrap();
++    let config = ini::Ini::load_from_file("/etc/space-invaders/config.ini").unwrap();
+     let mut conf = Config {
+         screen_width: 79,
+         screen_height: 24,
+@@ -120,20 +120,16 @@ struct Framebuffer {
+ #[derive(Clone)]
+ struct Pixel {
+     pub char: String,
+-    pub bg: Color,
+     pub fg: Color,
+     pub attrs: Attributes,
+ }
+ 
+-const DEFAULT_BG: Color = Color::AnsiValue(7);
+-const DEFAULT_FG: Color = Color::Black;
+-
++const DEFAULT_FG: Color = Color::White;
+ 
+ impl Pixel {
+     fn default() -> Pixel {
+         Pixel {
+             char: String::from(" "),
+-            bg: DEFAULT_BG,
+             fg: DEFAULT_FG,
+             attrs: Default::default(),
+         }
+@@ -284,7 +280,6 @@ impl Framebuffer {
+         for a in game.aliens.iter() {
+             let left_pix = Pixel {
+                 char: String::from("▛"),
+-                bg: DEFAULT_BG,
+                 fg: match a.value {
+                     100 => Color::Yellow,
+                     200 => Color::Cyan,
+@@ -303,7 +298,6 @@ impl Framebuffer {
+         for m in game.missiles.iter() {
+             buf.putpixel(m.x, m.y, Pixel {
+                 char: String::from("┃"),
+-                bg: DEFAULT_BG,
+                 fg: { if m.direction == MissileDirection::Down { Color::AnsiValue(13) } else { Color::AnsiValue(2) } },
+                 attrs: Default::default(),
+             })
+@@ -311,7 +305,6 @@ impl Framebuffer {
+         for x in 0..game.player.hitbox.width {
+             let p = Pixel {
+                 char: String::from("▀"),
+-                bg: DEFAULT_BG,
+                 fg: Color::DarkGreen,
+                 attrs: Default::default(),
+             };
+@@ -319,19 +312,16 @@ impl Framebuffer {
+         }
+         buf.putpixel(game.player.x + 1, game.player.y, Pixel {
+             char: String::from("▟"),
+-            bg: DEFAULT_BG,
+             fg: Color::DarkGreen,
+             attrs: Default::default(),
+         });
+         buf.putpixel(game.player.x + 2, game.player.y, Pixel {
+             char: String::from("▄"),
+-            bg: DEFAULT_BG,
+             fg: Color::DarkGreen,
+             attrs: Default::default(),
+         });
+         buf.putpixel(game.player.x + 3, game.player.y, Pixel {
+             char: String::from("▙"),
+-            bg: DEFAULT_BG,
+             fg: Color::DarkGreen,
+             attrs: Default::default(),
+         });
+@@ -351,17 +341,11 @@ impl Framebuffer {
+             queue!(
+                 stdout,
+                 SetForegroundColor(pix.fg),
+-                SetBackgroundColor(pix.bg),
+                 SetAttributes(pix.attrs)
+             ).unwrap();
+-            let mut last_bg = pix.bg;
+             let mut last_fg = pix.fg;
+             let mut last_attrs = pix.attrs;
+             for pix in row {
+-                if last_bg != pix.bg {
+-                    stdout.queue(SetBackgroundColor(pix.bg)).unwrap();
+-                    last_bg = pix.bg;
+-                }
+                 if last_fg != pix.fg {
+                     stdout.queue(SetForegroundColor(pix.fg)).unwrap();
+                     last_fg = pix.fg;
+@@ -571,7 +555,6 @@ fn main() {
+             stdout,
+             MoveTo(0,0),
+             SetForegroundColor(DEFAULT_FG),
+-            SetBackgroundColor(DEFAULT_BG),
+             SetAttributes(Default::default()),
+             Print(format!("Score: {}",game.score)),
+             MoveTo((CONFIG.screen_width-10) as u16,0),
