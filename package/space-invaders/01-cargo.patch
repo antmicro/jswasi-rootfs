@@ -1,7 +1,14 @@
 diff --git a/Cargo.toml b/Cargo.toml
-index 82f515b..60704d3 100644
+index 82f515b..f4ae446 100644
 --- a/Cargo.toml
 +++ b/Cargo.toml
+@@ -1,5 +1,5 @@
+ [package]
+-name = "space-invader"
++name = "space-invaders"
+ version = "0.1.0"
+ authors = ["Mia Celeste <mia@miaceleste.dev>"]
+ edition = "2018"
 @@ -7,7 +7,10 @@ edition = "2018"
  # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
  

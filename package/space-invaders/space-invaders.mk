@@ -9,4 +9,9 @@ SPACE_INVADERS_TARGET := $(SPACE_INVADERS_SRC_DIR)/target/wasm32-wasi/release/sp
 SPACE_INVADERS_DIST := $(RESOURCES_DIR)/space-invaders
 SPACE_INVADERS_PATCHES := $(wildcard $(PACKAGE_DIR)/space-invaders/*.patch)
 
+define SPACE_INVADERS_SRC_DIR_CMDS
+	@unzip -od $(BUILD_DIR) $(SPACE_INVADERS_SRC_ZIP)
+	@rm $(SPACE_INVADERS_SRC_DIR)/Cargo.lock
+endef
+
 $(eval $(call cargo-package,SPACE_INVADERS))
