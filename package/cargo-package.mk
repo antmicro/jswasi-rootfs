@@ -5,18 +5,22 @@ $(eval $(call apply-patches,$(1)))
 $(1): $($(1)_DEPENDENCIES) $($(1)_TARGET) | $(RESOURCES_DIR)
 	@cp $($(1)_TARGET) $($(1)_DIST)
 
+ifdef $(1)_SRC_ZIP
 $($(1)_SRC_ZIP): | $(BUILD_DIR)
 ifdef $(1)_SRC_ZIP_CMDS
 	$(call $(1)_SRC_ZIP_CMDS)
 else
 	@wget -qO $($(1)_SRC_ZIP) $($(1)_SRC_URL)
 endif
+endif
 
+ifdef $(1)_SRC_DIR
 $($(1)_SRC_DIR): $($(1)_SRC_ZIP) | $(BUILD_DIR)
 ifdef $(1)_SRC_DIR_CMDS
 	$(call $(1)_SRC_DIR_CMDS)
 else
 	@unzip -od $(BUILD_DIR) $($(1)_SRC_ZIP)
+endif
 endif
 
 .PHONY: $($(1)_TARGET)
