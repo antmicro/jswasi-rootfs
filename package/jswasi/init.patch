@@ -1,0 +1,12 @@
+diff --git a/src/terminal.ts b/src/terminal.ts
+index 24e01c45..15a8c5ef 100644
+--- a/src/terminal.ts
++++ b/src/terminal.ts
+@@ -25,6 +25,7 @@ const CHECKSUM_BINARIES = {
+   "/usr/bin/wash": ["resources/wash", "resources/wash.md5"],
+ };
+ const ALWAYS_FETCH_FILES = {
++  "/usr/bin/init.sh": "resources/init.sh",
+   "/etc/motd": "resources/motd.txt",
+   "/usr/bin/coreutils": "resources/coreutils",
+   "/usr/local/bin/wasibox": "resources/wasibox",
