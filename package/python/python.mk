@@ -1,4 +1,4 @@
-PYTHON_TAG := v0.1.2
+PYTHON_TAG := v0.1.3
 PYTHON_URL := https://github.com/antmicro/python-wasi/releases/download/$(PYTHON_TAG)
 PYTHON_LIB_URL := https://github.com/antmicro/python-wasi/releases/download/$(PYTHON_TAG)/python.tar.gz
 
