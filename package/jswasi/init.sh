@@ -1,9 +1,9 @@
 #!/usr/bin/wash
-test ! -f /usr/bin/ox && echo "downloading ox..." && wget resources/ox.wasm /usr/bin/ox
+test ! -f /usr/bin/ox && echo "downloading ox..." && wget resources/ox /usr/bin/ox
 test ! -f /home/ant/.config/ox/ox.ron && echo "downloading ox config..." && wget resources/ox.ron /home/ant/.config/ox/ox.ron
 test ! -f /usr/bin/uutils && echo "downloading uutils..." && wget resources/uutils.async.wasm /usr/bin/uutils
 test ! -f /usr/local/bin/syscalls_test && echo "downloading syscalls_test..." && wget resources/syscalls_test.wasm /usr/local/bin/syscalls_test
-test ! -f /usr/local/bin/python && echo "downloading python..." && wget resources/python.wasm /usr/local/bin/python
+test ! -f /usr/local/bin/python && echo "downloading python..." && wget resources/python /usr/local/bin/python
 test ! -f /usr/local/bin/duk && echo "downloading duk..." && wget https://registry-cdn.wapm.io/contents/_/duktape/0.0.3/build/duk.wasm /usr/local/bin/duk
 test ! -f /usr/local/bin/cowsay && echo "downloading cowsay..." && wget https://registry-cdn.wapm.io/contents/_/cowsay/0.2.0/target/wasm32-wasi/release/cowsay.wasm /usr/local/bin/cowsay
 test ! -f /usr/local/bin/qjs && echo "downloading qjs..." && wget https://registry-cdn.wapm.io/contents/adamz/quickjs/0.20210327.0/build/qjs.wasm /usr/local/bin/qjs
@@ -18,10 +18,10 @@ test ! -f /usr/local/bin/ruby && echo "downloading ruby..." && wget https://regi
 test ! -f /usr/local/bin/clang && echo "downloading clang..." && wget https://registry-cdn.wapm.io/contents/_/clang/0.1.0/clang.wasm /usr/local/bin/clang
 test ! -f /usr/local/bin/wasm-ld && echo "downloading wasm-ld..." && wget https://registry-cdn.wapm.io/contents/_/clang/0.1.0/wasm-ld.wasm /usr/local/bin/wasm-ld
 test ! -f /usr/local/bin/wasibox && echo "downloading wasibox..." && wget resources/wasibox.wasm /usr/local/bin/wasibox
-test ! -f /usr/local/bin/space-invaders && echo "downloading space-invaders..." && wget resources/space-invader.wasm /usr/local/bin/space-invaders
+test ! -f /usr/local/bin/space-invaders && echo "downloading space-invaders..." && wget resources/space-invaders /usr/local/bin/space-invaders
 if test ! -f /usr/local/bin/kibi; then
     echo "downloading kibi..."
-    wget resources/kibi.wasm /usr/local/bin/kibi
+    wget resources/kibi /usr/local/bin/kibi
     mkdir -p /home/ant/.config/kibi/
     wget resources/config.ini /home/ant/.config/kibi/config.ini
     mkdir -p /home/ant/.local/share/kibi/
