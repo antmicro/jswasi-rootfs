@@ -8,4 +8,6 @@ COREUTILS_SRC_DIR := $(BUILD_DIR)/coreutils-$(COREUTILS_SRC_REV)
 COREUTILS_TARGET := $(COREUTILS_SRC_DIR)/target/wasm32-wasi/release/coreutils.wasm
 COREUTILS_DIST := $(RESOURCES_DIR)/coreutils
 
+COREUTILS_CARGO_OPTS := --features wasi
+
 $(eval $(call cargo-package,COREUTILS))
