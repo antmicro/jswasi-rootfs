@@ -15,8 +15,8 @@ test ! -f /usr/local/bin/du && echo "downloading du..." && wget https://registry
 test ! -f /usr/local/bin/llc && echo "downloading llc..." && wget https://registry-cdn.wapm.io/contents/rapidlua/llc/0.0.4/llc.wasm /usr/local/bin/llc
 test ! -f /usr/local/bin/rsign2 && echo "downloading rsign2..." && wget https://registry-cdn.wapm.io/contents/jedisct1/rsign2/0.6.1/rsign.wasm /usr/local/bin/rsign2
 test ! -f /usr/local/bin/ruby && echo "downloading ruby..." && wget https://registry-cdn.wapm.io/contents/katei/ruby/0.1.2/dist/ruby.wasm /usr/local/bin/ruby
-test ! -f /usr/local/bin/clang && echo "downloading clang..." && wget https://registry-cdn.wapm.io/contents/_/clang/0.1.0/clang.wasm /usr/local/bin/clang
-test ! -f /usr/local/bin/wasm-ld && echo "downloading wasm-ld..." && wget https://registry-cdn.wapm.io/contents/_/clang/0.1.0/wasm-ld.wasm /usr/local/bin/wasm-ld
+test ! -f /usr/local/bin/clang && echo "downloading clang..." && wget resources/clang /usr/local/bin/clang
+test ! -f /usr/local/bin/wasm-ld && echo "downloading wasm-ld..." && wget resources/wasm-ld /usr/local/bin/wasm-ld
 test ! -f /usr/local/bin/wasibox && echo "downloading wasibox..." && wget resources/wasibox.wasm /usr/local/bin/wasibox
 test ! -f /usr/local/bin/space-invaders && echo "downloading space-invaders..." && wget resources/space-invaders /usr/local/bin/space-invaders
 if test ! -f /usr/local/bin/kibi; then

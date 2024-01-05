@@ -3,7 +3,7 @@ WORK_DIR ?= $(shell pwd)/work
 DIST_DIR ?= $(WORK_DIR)/dist
 RESOURCES_DIR ?= $(DIST_DIR)/resources
 BUILD_DIR := $(WORK_DIR)/build
-PACKAGES := rust wasi-sdk coreutils wasibox space-invaders kibi ox wash python jswasi
+PACKAGES := rust wasi-sdk coreutils wasibox space-invaders kibi ox wash python jswasi clang
 
 .PHONY: all
 all: $(foreach package,$(PACKAGES),$(shell echo $(package) | tr [:lower:] [:upper:] | tr '-' '_'))
