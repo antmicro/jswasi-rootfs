@@ -2,7 +2,7 @@
 test ! -f /usr/bin/ox && echo "downloading ox..." && wget resources/ox /usr/bin/ox
 test ! -f /home/ant/.config/ox/ox.ron && echo "downloading ox config..." && wget resources/ox.ron /home/ant/.config/ox/ox.ron
 test ! -f /usr/bin/uutils && echo "downloading uutils..." && wget resources/uutils.async.wasm /usr/bin/uutils
-test ! -f /usr/local/bin/syscalls_test && echo "downloading syscalls_test..." && wget resources/syscalls_test.wasm /usr/local/bin/syscalls_test
+test ! -f /usr/local/bin/syscalls_test && echo "downloading syscalls_test..." && wget resources/syscalls_test /usr/local/bin/syscalls_test
 test ! -f /usr/local/bin/python && echo "downloading python..." && wget resources/python /usr/local/bin/python
 test ! -f /usr/local/bin/duk && echo "downloading duk..." && wget https://registry-cdn.wapm.io/contents/_/duktape/0.0.3/build/duk.wasm /usr/local/bin/duk
 test ! -f /usr/local/bin/cowsay && echo "downloading cowsay..." && wget https://registry-cdn.wapm.io/contents/_/cowsay/0.2.0/target/wasm32-wasi/release/cowsay.wasm /usr/local/bin/cowsay
