@@ -50,4 +50,9 @@ $(JSWASI_DIST_DIR): $(JSWASI_SRC_DIR) $(JSWASI_PATCHES)
 JSWASI: $(JSWASI_DIST_DIR) $(RESOURCES_DIR)/init.sh $(RESOURCES_DIR)/config.json $(DIST_DIR)/index.html $(RESOURCES_DIR)/vfs_config.json $(JSWASI_SYSCALLS_TEST_DIST) | $(DIST_DIR)
 	@cp -r $(JSWASI_DIST_DIR)/* $(DIST_DIR)
 
+.PHONY: JSWASI_RUN_TESTS
+JSWASI_RUN_TESTS: $(JSWASI_DIST_DIR)
+	@cd $(JSWASI_SRC_DIR) && \
+	npm run test:unit
+
 $(eval $(call apply-patches,JSWASI))
