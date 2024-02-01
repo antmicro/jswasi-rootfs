@@ -60,8 +60,8 @@ JSWASI: $(JSWASI_DIST_DIR) $(RESOURCES_DIR)/motd.txt $(RESOURCES_DIR)/init.sh $(
 	@cp -r $(JSWASI_DIST_DIR)/* $(DIST_DIR)
 
 .PHONY: JSWASI_RUN_TESTS
-JSWASI_RUN_TESTS: $(JSWASI_DIST_DIR)
+JSWASI_RUN_TESTS: $(JSWASI_SRC_DIR)
 	@cd $(JSWASI_SRC_DIR) && \
-	npm run test:unit
+	make test
 
 $(eval $(call apply-patches,JSWASI))
