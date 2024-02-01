@@ -14,6 +14,8 @@ JSWASI_INIT := $(PACKAGE_DIR)/jswasi/init.sh
 JSWASI_CONFIG := $(PACKAGE_DIR)/jswasi/config.json
 JSWASI_VFS_CONFIG := $(PACKAGE_DIR)/jswasi/vfs_config.json
 
+JSWASI_MOTD := $(JSWASI_DIST_DIR)/resources/motd.txt
+
 JSWASI_SYSCALLS_TEST_TARGET := $(JSWASI_SRC_DIR)/tests/syscalls/target/wasm32-wasi/release/syscalls_test.wasm
 JSWASI_SYSCALLS_TEST_DIST := $(RESOURCES_DIR)/syscalls_test
 
@@ -46,8 +48,15 @@ $(JSWASI_DIST_DIR): $(JSWASI_SRC_DIR) $(JSWASI_PATCHES)
 	@cd $(JSWASI_SRC_DIR) && \
 	make embed
 
+$(JSWASI_MOTD): $(JSWASI_DIST_DIR)
+	@cd $(JSWASI_SRC_DIR) && \
+	make $(JSWASI_MOTD)
+
+$(RESOURCES_DIR)/motd.txt: $(JSWASI_MOTD) | $(RESOURCES_DIR)
+	@cp $(JSWASI_MOTD) $(RESOURCES_DIR)/motd.txt
+
 .PHONY: JSWASI
-JSWASI: $(JSWASI_DIST_DIR) $(RESOURCES_DIR)/init.sh $(RESOURCES_DIR)/config.json $(DIST_DIR)/index.html $(RESOURCES_DIR)/vfs_config.json $(JSWASI_SYSCALLS_TEST_DIST) | $(DIST_DIR)
+JSWASI: $(JSWASI_DIST_DIR) $(RESOURCES_DIR)/motd.txt $(RESOURCES_DIR)/init.sh $(RESOURCES_DIR)/config.json $(DIST_DIR)/index.html $(RESOURCES_DIR)/vfs_config.json $(JSWASI_SYSCALLS_TEST_DIST) | $(DIST_DIR)
 	@cp -r $(JSWASI_DIST_DIR)/* $(DIST_DIR)
 
 .PHONY: JSWASI_RUN_TESTS
