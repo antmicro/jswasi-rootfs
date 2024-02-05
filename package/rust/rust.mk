@@ -13,7 +13,10 @@ CARGO = WASI_SDK_PATH=$(WASI_SDK_PATH) cargo +wasi_extended
 $(eval $(call apply-patches,RUST))
 
 $(RUST_SRC_DIR): | $(BUILD_DIR)
-	@git clone $(RUST_SRC_URL) $(RUST_SRC_DIR) -b beta
+	@git clone $(RUST_SRC_URL) $(RUST_SRC_DIR) -b beta && \
+	cd $(RUST_SRC_DIR) && \
+	git reset --hard $(RUST_SRC_REV) && \
+	git clean -df
 
 # patches are always applied, hence no-order dependency
 # this target won't be remade when patches update
