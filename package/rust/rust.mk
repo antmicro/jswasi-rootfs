@@ -27,7 +27,7 @@ $(RUST_CONFIG): | $(RUST_SRC_DIR) $(RUST_PATCHES)
 		--target wasm32-wasi \
 		--disable-docs \
 		--set target.wasm32-wasi.wasi-root=$(WASI_SDK_PATH)/share/wasi-sysroot \
-		--set llvm.download-ci-llvm=true \
+		--set llvm.download-ci-llvm=false \
 		--enable-lld \
 		--tools cargo
 
