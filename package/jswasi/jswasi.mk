@@ -1,6 +1,6 @@
 JSWASI_DEPENDENCIES := RUST WASI_SDK
 
-JSWASI_SRC_REV := 01b4cead721ed0f1c755a8bae88bdc155aa0309d
+JSWASI_SRC_REV := a8dceef298f4cac7c22ea270015fa27cac40f811
 JSWASI_SRC_URL := https://github.com/antmicro/jswasi/archive/$(JSWASI_SRC_REV).zip
 JSWASI_SRC_ZIP := $(BUILD_DIR)/$(JSWASI_SRC_REV).zip
 
