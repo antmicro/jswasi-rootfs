@@ -46,6 +46,10 @@ $(JSWASI_DIST_DIR): $(JSWASI_SRC_DIR) $(JSWASI_PATCHES)
 	@cd $(JSWASI_SRC_DIR) && \
 	make embed
 
+$(JSWASI_DIST_DIR)/enable_threads.js: $(JSWASI_DIST_DIR) $(JSWASI_PATCHES)
+	@cd $(JSWASI_SRC_DIR) && \
+	make $(JSWASI_DIST_DIR)/enable_threads.js
+
 $(JSWASI_MOTD): $(JSWASI_DIST_DIR)
 	@cd $(JSWASI_SRC_DIR) && \
 	make $(JSWASI_MOTD)
@@ -54,7 +58,7 @@ $(RESOURCES_DIR)/motd.txt: $(JSWASI_MOTD) | $(RESOURCES_DIR)
 	@cp $(JSWASI_MOTD) $(RESOURCES_DIR)/motd.txt
 
 .PHONY: JSWASI
-JSWASI: $(JSWASI_DIST_DIR) $(RESOURCES_DIR)/motd.txt $(RESOURCES_DIR)/init.sh $(RESOURCES_DIR)/config.json $(DIST_DIR)/index.html $(RESOURCES_DIR)/vfs_config.json $(JSWASI_SYSCALLS_TEST_DIST) | $(DIST_DIR)
+JSWASI: $(JSWASI_DIST_DIR) $(RESOURCES_DIR)/motd.txt $(RESOURCES_DIR)/init.sh $(RESOURCES_DIR)/config.json $(DIST_DIR)/index.html $(RESOURCES_DIR)/vfs_config.json $(JSWASI_SYSCALLS_TEST_DIST) $(JSWASI_DIST_DIR)/enable_threads.js | $(DIST_DIR)
 	@cp -r $(JSWASI_DIST_DIR)/* $(DIST_DIR)
 
 .PHONY: JSWASI_RUN_TESTS
