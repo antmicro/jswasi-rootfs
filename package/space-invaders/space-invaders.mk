@@ -8,11 +8,15 @@ SPACE_INVADERS_TARGET = $(SPACE_INVADERS_SRC_DIR)/target/wasm32-wasi/release/spa
 SPACE_INVADERS_DIST := $(RESOURCES_DIR)/space-invaders
 
 SPACE_INVADERS_PATCHES := $(wildcard $(PACKAGE_DIR)/space-invaders/*.patch)
+SPACE_INVADERS_DIST_EXTRA := $(RESOURCES_DIR)/invaders_config.ini
 
 define SPACE_INVADERS_SRC_DIR_CMDS
 	@unzip -od $(BUILD_DIR) $(SPACE_INVADERS_SRC_ZIP)
 	@rm $(SPACE_INVADERS_SRC_DIR)/Cargo.lock
 endef
+
+$(RESOURCES_DIR)/invaders_config.ini: $(PACKAGE_DIR)/space-invaders/config.ini | $(RESOURCES_DIR)
+	@cp $(PACKAGE_DIR)/space-invaders/config.ini $(RESOURCES_DIR)/invaders_config.ini
 
 $(eval $(call get-sources,SPACE_INVADERS))
 $(eval $(call apply-patches,SPACE_INVADERS))
