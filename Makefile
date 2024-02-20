@@ -5,11 +5,13 @@ RESOURCES_DIR ?= $(DIST_DIR)/resources
 BUILD_DIR := $(WORK_DIR)/build
 PACKAGES := rust wasi-sdk coreutils wasibox space-invaders kibi ox wash python jswasi clang
 
-.PHONY: all
-all: $(foreach package,$(PACKAGES),$(shell echo $(package) | tr [:lower:] [:upper:] | tr '-' '_'))
-
+include ./package/utils.mk
+include ./package/get-sources.mk
 include ./package/patch-sources.mk
 include ./package/cargo-package.mk
+
+.PHONY: all
+all: $(foreach package,$(PACKAGES),$(subst -,_,$(call uppercase,$(package))))
 
 $(foreach package,$(PACKAGES),$(eval include ./package/$(package)/$(package).mk))
 

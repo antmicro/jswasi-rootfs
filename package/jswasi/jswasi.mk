@@ -1,12 +1,11 @@
 JSWASI_DEPENDENCIES := RUST WASI_SDK
+JSWASI_PKG_NAME := jswasi
 
 JSWASI_SRC_REV := 6a4ec447d791b2dd705e1099c63b96ae18912d28
-JSWASI_SRC_URL := https://github.com/antmicro/jswasi/archive/$(JSWASI_SRC_REV).zip
-JSWASI_SRC_ZIP := $(BUILD_DIR)/$(JSWASI_SRC_REV).zip
+JSWASI_SRC_URL := $(call github_url,antmicro,jswasi,$(JSWASI_SRC_REV))
 
-JSWASI_SRC_DIR := $(BUILD_DIR)/jswasi-$(JSWASI_SRC_REV)
+JSWASI_DIST_DIR = $(JSWASI_SRC_DIR)/dist
 
-JSWASI_DIST_DIR := $(JSWASI_SRC_DIR)/dist
 JSWASI_PATCHES := $(PACKAGE_DIR)/jswasi/init.patch
 
 JSWASI_INDEX := $(PACKAGE_DIR)/jswasi/index.html
@@ -14,16 +13,15 @@ JSWASI_INIT := $(PACKAGE_DIR)/jswasi/init.sh
 JSWASI_CONFIG := $(PACKAGE_DIR)/jswasi/config.json
 JSWASI_VFS_CONFIG := $(PACKAGE_DIR)/jswasi/vfs_config.json
 
-JSWASI_MOTD := $(JSWASI_DIST_DIR)/resources/motd.txt
+JSWASI_MOTD = $(JSWASI_DIST_DIR)/resources/motd.txt
 
-JSWASI_SYSCALLS_TEST_TARGET := $(JSWASI_SRC_DIR)/tests/syscalls/target/wasm32-wasi/release/syscalls_test.wasm
+JSWASI_SYSCALLS_TEST_TARGET = $(JSWASI_SRC_DIR)/tests/syscalls/target/wasm32-wasi/release/syscalls_test.wasm
 JSWASI_SYSCALLS_TEST_DIST := $(RESOURCES_DIR)/syscalls_test
 
-$(JSWASI_SRC_ZIP): | $(BUILD_DIR)
-	@wget -qO $(JSWASI_SRC_ZIP) $(JSWASI_SRC_URL)
 
-$(JSWASI_SRC_DIR): $(JSWASI_SRC_ZIP) | $(BUILD_DIR)
-	@unzip -od $(BUILD_DIR) $(JSWASI_SRC_ZIP)
+$(eval $(call get-sources,JSWASI))
+$(eval $(call apply-patches,JSWASI))
+
 
 $(RESOURCES_DIR)/vfs_config.json: $(JSWASI_VFS_CONFIG) | $(RESOURCES_DIR)
 	@cp $(JSWASI_VFS_CONFIG) $(RESOURCES_DIR)/vfs_config.json
@@ -63,5 +61,3 @@ JSWASI: $(JSWASI_DIST_DIR) $(RESOURCES_DIR)/motd.txt $(RESOURCES_DIR)/init.sh $(
 JSWASI_RUN_TESTS: $(JSWASI_SRC_DIR)
 	@cd $(JSWASI_SRC_DIR) && \
 	make test
-
-$(eval $(call apply-patches,JSWASI))
