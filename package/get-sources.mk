@@ -26,7 +26,10 @@ $($(1)_SRC_DIR): $($(1)_SRC_ZIP) | $(BUILD_DIR)
 ifdef $(1)_SRC_DIR_CMDS
 	$(call $(1)_SRC_DIR_CMDS)
 else
-	@unzip -od $(BUILD_DIR) $($(1)_SRC_ZIP)
+	@mkdir -p $($(1)_SRC_DIR)
+	@unzip -od $($(1)_SRC_DIR) $($(1)_SRC_ZIP)
+	@find $($(1)_SRC_DIR) -mindepth 2 -maxdepth 2 -exec mv -t $($(1)_SRC_DIR) {} \;
+	@find $($(1)_SRC_DIR) -empty -type d -delete
 endif
 endef  # get-sources
 
