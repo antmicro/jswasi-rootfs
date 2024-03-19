@@ -3,15 +3,12 @@ OX_PKG_NAME := ox
 
 OX_SRC_REV := ff1fbd2b9947f69b2f8f4d63b62ebbfc801c38bf
 OX_SRC_URL := $(call github_url,antmicro,ox,$(OX_SRC_REV))
-OX_SRC_ZIP := $(BUILD_DIR)/$(OX_SRC_REV).zip
-OX_SRC_DIR := $(BUILD_DIR)/ox-$(OX_SRC_REV)
 
-OX_TARGET := $(OX_SRC_DIR)/target/wasm32-wasi/release/ox.wasm
-OX_DIST := $(RESOURCES_DIR)/ox
-OX_DIST_EXTRA := $(RESOURCES_DIR)/ox.ron
+OX_DIST := $(ROOTFS_DIR)/usr/local/bin/ox
 
-$(RESOURCES_DIR)/ox.ron: $(OX_SRC_DIR)/config/ox.ron | $(RESOURCES_DIR)
-	@cp $(OX_SRC_DIR)/config/ox.ron $(RESOURCES_DIR)/ox.ron
+define OX_INSTALL_CMDS_EXTRA
+	$(INSTALL) -D $(OX_SRC_DIR)/config/ox.ron $(ROOTFS_DIR)/home/ant/.config/ox.ron
+endef
 
 $(eval $(call get-sources,OX))
 $(eval $(call cargo-package,OX))

@@ -51,9 +51,15 @@ $(DIST_DIR)/index.html: $(JSWASI_INDEX) | $(DIST_DIR)
 $(THIRD_PARTY_DIR)/hterm_all.js: $(JSWASI_HTERM) | $(THIRD_PARTY_DIR)
 	cp $< $@
 
-.PHONY: JSWASI
-JSWASI: $(JSWASI_DIST_DIR) $(RESOURCES_DIR)/motd.txt $(THIRD_PARTY_DIR)/hterm_all.js $(RESOURCES_DIR)/init.sh $(RESOURCES_DIR)/config.json $(DIST_DIR)/index.html $(RESOURCES_DIR)/vfs_config.json $(JSWASI_SYSCALLS_TEST_DIST) | $(DIST_DIR)
+$(JSWASI_SRC_DIR)/.installed: $(RESOURCES_DIR)/motd.txt $(THIRD_PARTY_DIR)/hterm_all.js $(RESOURCES_DIR)/init.sh $(RESOURCES_DIR)/config.json $(DIST_DIR)/index.html $(RESOURCES_DIR)/vfs_config.json $(JSWASI_SYSCALLS_TEST_DIST) | $(DIST_DIR) $(ROOTFS_DIR) $(RESOURCES_DIR) $(JSWASI_DEPENENCIES) $(JSWASI_DIST_DIR)
 	cp -r $(JSWASI_DIST_DIR)/* $(DIST_DIR)
+	$(INSTALL) -D $(JSWASI_INIT) $(ROOTFS_DIR)/usr/bin/init.sh
+	$(INSTALL) -D $(JSWASI_MOTD) $(ROOTFS_DIR)/etc/motd
+	mkdir -p $(ROOTFS_DIR)/tmp $(ROOTFS_DIR)/mnt $(ROOTFS_DIR)/proc $(ROOTFS_DIR)/dev
+	touch $(JSWASI_SRC_DIR)/.installed
+
+.PHONY: JSWASI
+JSWASI: $(JSWASI_SRC_DIR)/.installed
 
 .PHONY: JSWASI_CLEAN
 JSWASI_CLEAN:
