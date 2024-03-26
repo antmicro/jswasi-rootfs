@@ -13,7 +13,7 @@ CARGO = WASI_SDK_PATH=$(WASI_SDK_PATH) cargo +wasi_extended
 
 # patches are always applied, hence no-order dependency
 # this target won't be remade when patches update
-$(RUST_CONFIG): | $(RUST_SRC_DIR) $(RUST_PATCHES)
+$(RUST_CONFIG): | $(RUST_SRC_DIR) $(RUST_SRC_DIR)/.patched
 	@rm -f $(RUST_CONFIG)
 	@cd $(RUST_SRC_DIR) && \
 	./configure \
