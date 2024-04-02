@@ -1,7 +1,7 @@
-diff --git a/src/terminal.ts b/src/terminal.ts
-index 24e01c45..15a8c5ef 100644
---- a/src/terminal.ts
-+++ b/src/terminal.ts
+diff --git a/src/jswasi.ts b/src/jswasi.ts
+index 5ea6e5d..07acd3a 100644
+--- a/src/jswasi.ts
++++ b/src/jswasi.ts
 @@ -25,6 +25,7 @@ const CHECKSUM_BINARIES = {
    "/usr/bin/wash": ["resources/wash", "resources/wash.md5"],
  };
