@@ -2,6 +2,7 @@ PACKAGE_DIR ?= $(shell pwd)/package
 WORK_DIR ?= $(shell pwd)/work
 DIST_DIR ?= $(WORK_DIR)/dist
 RESOURCES_DIR ?= $(DIST_DIR)/resources
+THIRD_PARTY_DIR ?= $(DIST_DIR)/third_party
 BUILD_DIR := $(WORK_DIR)/build
 PACKAGES := rust wasi-sdk coreutils wasibox space-invaders kibi ox wash python jswasi clang
 
@@ -26,6 +27,9 @@ $(DIST_DIR):
 
 $(RESOURCES_DIR):
 	@mkdir -p $(RESOURCES_DIR)
+
+$(THIRD_PARTY_DIR):
+	@mkdir -p $(THIRD_PARTY_DIR)
 
 .PHONY: clean_all
 clean_all: $(clean)

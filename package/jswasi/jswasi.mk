@@ -14,6 +14,7 @@ JSWASI_VFS_CONFIG := $(PACKAGE_DIR)/jswasi/vfs_config.json
 
 JSWASI_INDEX = $(JSWASI_DIST_DIR)/index.html
 JSWASI_MOTD = $(JSWASI_DIST_DIR)/resources/motd.txt
+JSWASI_HTERM = $(JSWASI_DIST_DIR)/third_party/hterm_all.js
 
 JSWASI_SYSCALLS_TEST_TARGET = $(JSWASI_SRC_DIR)/tests/syscalls/target/wasm32-wasi/release/syscalls_test.wasm
 JSWASI_SYSCALLS_TEST_DIST := $(RESOURCES_DIR)/syscalls_test
@@ -37,7 +38,7 @@ $(JSWASI_DIST_DIR): $(JSWASI_SRC_DIR) $(JSWASI_PATCHES)
 	cd $(JSWASI_SRC_DIR) && \
 	make embed
 
-$(JSWASI_MOTD) $(JSWASI_INDEX): %: $(JSWASI_DIST_DIR)
+$(JSWASI_MOTD) $(JSWASI_INDEX) $(JSWASI_HTERM): %: $(JSWASI_DIST_DIR)
 	cd $(JSWASI_SRC_DIR) && \
 	make $@
 
@@ -47,8 +48,11 @@ $(RESOURCES_DIR)/motd.txt: $(JSWASI_MOTD) | $(RESOURCES_DIR)
 $(DIST_DIR)/index.html: $(JSWASI_INDEX) | $(DIST_DIR)
 	cp $< $@
 
+$(THIRD_PARTY_DIR)/hterm_all.js: $(JSWASI_HTERM) | $(THIRD_PARTY_DIR)
+	cp $< $@
+
 .PHONY: JSWASI
-JSWASI: $(JSWASI_DIST_DIR) $(RESOURCES_DIR)/motd.txt $(RESOURCES_DIR)/init.sh $(RESOURCES_DIR)/config.json $(DIST_DIR)/index.html $(RESOURCES_DIR)/vfs_config.json $(JSWASI_SYSCALLS_TEST_DIST) | $(DIST_DIR)
+JSWASI: $(JSWASI_DIST_DIR) $(RESOURCES_DIR)/motd.txt $(THIRD_PARTY_DIR)/hterm_all.js $(RESOURCES_DIR)/init.sh $(RESOURCES_DIR)/config.json $(DIST_DIR)/index.html $(RESOURCES_DIR)/vfs_config.json $(JSWASI_SYSCALLS_TEST_DIST) | $(DIST_DIR)
 	cp -r $(JSWASI_DIST_DIR)/* $(DIST_DIR)
 
 .PHONY: JSWASI_RUN_TESTS
