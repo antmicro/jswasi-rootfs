@@ -53,6 +53,10 @@ $(JSWASI_SRC_DIR)/.installed: $(JSWASI_MOTD) $(THIRD_PARTY_DIR)/hterm_all.js $(R
 	$(INSTALL) -D $(JSWASI_INIT) $(ROOTFS_DIR)/usr/bin/init.sh
 	$(INSTALL) -D $(JSWASI_MOTD) $(ROOTFS_DIR)/etc/motd
 	mkdir -p $(ROOTFS_DIR)/tmp $(ROOTFS_DIR)/mnt $(ROOTFS_DIR)/proc $(ROOTFS_DIR)/dev
+	# Browser apps
+	touch $(ROOTFS_DIR)/usr/bin/ps
+	touch $(ROOTFS_DIR)/usr/bin/free
+	touch $(ROOTFS_DIR)/usr/bin/reset
 	touch $(JSWASI_SRC_DIR)/.installed
 
 .PHONY: JSWASI
