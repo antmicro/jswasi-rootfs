@@ -7,7 +7,7 @@ OX_SRC_URL := $(call github_url,antmicro,ox,$(OX_SRC_REV))
 OX_DIST := $(ROOTFS_DIR)/usr/local/bin/ox
 
 define OX_INSTALL_CMDS_EXTRA
-	$(INSTALL) -D $(OX_SRC_DIR)/config/ox.ron $(ROOTFS_DIR)/home/ant/.config/ox.ron
+	$(INSTALL) -D $(OX_SRC_DIR)/config/ox.ron $(ROOTFS_DIR)/home/ant/.config/ox/ox.ron
 endef
 
 $(eval $(call get-sources,OX))
