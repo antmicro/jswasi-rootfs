@@ -1,0 +1,8 @@
+{
+  "name": "wash",
+  "stdin": "/dev/ttyH0",
+  "stdout": "/dev/ttyH0",
+  "stderr": "/dev/ttyH0",
+  "cmd": "/usr/bin/wash",
+  "args": ["/usr/bin/init.sh"]
+}
