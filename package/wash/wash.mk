@@ -1,7 +1,7 @@
 WASH_DEPENDENCIES := RUST WASI_SDK
 WASH_PKG_NAME := wash
 
-WASH_SRC_REV := c75120b45e3c2407adf0a4fa6ce92f00b670db70
+WASH_SRC_REV := 56dca88af5bd2e0f6cc923e1af80c613eb6ada80
 WASH_SRC_URL := $(call github_url,antmicro,wash,$(WASH_SRC_REV))
 
 WASH_ROOTFS_PATH := /usr/bin/wash
