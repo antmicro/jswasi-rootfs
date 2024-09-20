@@ -35,6 +35,7 @@ define COREUTILS_INSTALL_CMDS_EXTRA
 	ln -fs $(COREUTILS_ROOTFS_PATH) $(ROOTFS_DIR)/usr/bin/true
 	ln -fs $(COREUTILS_ROOTFS_PATH) $(ROOTFS_DIR)/usr/bin/wc
 	ln -fs $(COREUTILS_ROOTFS_PATH) $(ROOTFS_DIR)/usr/bin/hashsum
+	ln -fs $(COREUTILS_ROOTFS_PATH) $(ROOTFS_DIR)/usr/bin/base64
 endef
 
 $(eval $(call get-sources,COREUTILS))
