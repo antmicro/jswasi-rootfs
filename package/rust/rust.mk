@@ -1,7 +1,7 @@
 RUST_DEPENDENCIES := WASI_SDK
 RUST_PKG_NAME := rust
 
-RUST_SRC_REV := aad221e296715661a12715ab327dce058a807686
+RUST_SRC_REV := eeb90cda1969383f56a2637cbd3037bdf598841c
 RUST_SRC_URL := https://github.com/rust-lang/rust.git
 RUST_SRC_DIR := $(BUILD_DIR)/rust-$(RUST_SRC_REV)
 
@@ -24,8 +24,10 @@ $(RUST_CONFIG): | $(RUST_SRC_DIR) $(RUST_SRC_DIR)/.patched
 		--enable-lld \
 		--tools cargo
 
+.PHONY: $(RUST_TOOLCHAIN)
 $(RUST_TOOLCHAIN): $(RUST_CONFIG) | $(RUST_DEPENDENCIES)
 	@cd $(RUST_SRC_DIR) && \
+	export PATH=$$PATH:$(RUST_SRC_DIR)/build/host/llvm/bin && \
 	./x.py build --target wasm32-wasi,x86_64-unknown-linux-gnu --stage 1
 
 # TODO: Don't install the toolchain globally, use local rustup
