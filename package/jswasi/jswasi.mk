@@ -1,7 +1,7 @@
 JSWASI_DEPENDENCIES := RUST WASI_SDK
 JSWASI_PKG_NAME := jswasi
 
-JSWASI_SRC_REV := 03444e9c18e6ebf71b569a402d741d687d6ff485
+JSWASI_SRC_REV := 1017ddb456887881fe2454b96613738df7fcb338
 JSWASI_SRC_URL := $(call github_url,antmicro,jswasi,$(JSWASI_SRC_REV))
 
 JSWASI_DIST_DIR = $(JSWASI_SRC_DIR)/dist
@@ -14,7 +14,7 @@ JSWASI_VFS_CONFIG := $(PACKAGE_DIR)/jswasi/vfs_config.json
 
 JSWASI_INDEX = $(JSWASI_DIST_DIR)/index.html
 JSWASI_MOTD = $(JSWASI_DIST_DIR)/resources/motd.txt
-JSWASI_HTERM = $(JSWASI_DIST_DIR)/third_party/hterm_all.js
+JSWASI_HTERM = $(JSWASI_DIST_DIR)/third_party/hterm.js
 
 JSWASI_SYSCALLS_TEST_TARGET = $(JSWASI_SRC_DIR)/tests/syscalls/target/wasm32-wasi/release/syscalls_test.wasm
 JSWASI_SYSCALLS_TEST_DIST := $(RESOURCES_DIR)/syscalls_test
@@ -45,10 +45,10 @@ $(JSWASI_MOTD) $(JSWASI_INDEX) $(JSWASI_HTERM): %: $(JSWASI_DIST_DIR)
 $(DIST_DIR)/index.html: $(JSWASI_INDEX) | $(DIST_DIR)
 	cp $< $@
 
-$(THIRD_PARTY_DIR)/hterm_all.js: $(JSWASI_HTERM) | $(THIRD_PARTY_DIR)
+$(THIRD_PARTY_DIR)/hterm.js: $(JSWASI_HTERM) | $(THIRD_PARTY_DIR)
 	cp $< $@
 
-$(JSWASI_SRC_DIR)/.installed: $(JSWASI_MOTD) $(THIRD_PARTY_DIR)/hterm_all.js $(RESOURCES_DIR)/config.json $(DIST_DIR)/index.html $(RESOURCES_DIR)/vfs_config.json $(JSWASI_SYSCALLS_TEST_DIST) | $(DIST_DIR) $(ROOTFS_DIR) $(RESOURCES_DIR) $(JSWASI_DEPENENCIES) $(JSWASI_DIST_DIR)
+$(JSWASI_SRC_DIR)/.installed: $(JSWASI_MOTD) $(THIRD_PARTY_DIR)/hterm.js $(RESOURCES_DIR)/config.json $(DIST_DIR)/index.html $(RESOURCES_DIR)/vfs_config.json $(JSWASI_SYSCALLS_TEST_DIST) | $(DIST_DIR) $(ROOTFS_DIR) $(RESOURCES_DIR) $(JSWASI_DEPENENCIES) $(JSWASI_DIST_DIR)
 	cp -r $(JSWASI_DIST_DIR)/* $(DIST_DIR)
 	$(INSTALL) -D $(JSWASI_INIT) $(ROOTFS_DIR)/usr/bin/init.sh
 	$(INSTALL) -D $(JSWASI_MOTD) $(ROOTFS_DIR)/etc/motd
