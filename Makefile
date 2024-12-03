@@ -13,7 +13,7 @@ include ./package/get-sources.mk
 include ./package/patch-sources.mk
 include ./package/cargo-package.mk
 
-PACKAGES_ALL := rust wasi-sdk coreutils wasibox space-invaders kibi ox wash python jswasi clang age jq
+PACKAGES_ALL := rust wasi-sdk coreutils wasibox space-invaders kibi ox wash python jswasi clang age jq wasi_ext_lib
 PACKAGES ?= $(PACKAGES_ALL)
 PACKAGES_UPPERCASE := $(foreach package,$(PACKAGES),$(subst -,_,$(call uppercase,$(package))))
 
