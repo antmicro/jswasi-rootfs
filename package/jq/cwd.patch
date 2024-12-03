@@ -1,0 +1,72 @@
+diff --git a/src/compile.c b/src/compile.c
+index 467ea2b..f6614a2 100644
+--- a/src/compile.c
++++ b/src/compile.c
+@@ -732,7 +732,7 @@ block gen_collect(block expr) {
+   block array_var = gen_op_var_fresh(STOREV, "collect");
+   block c = BLOCK(gen_op_simple(DUP), gen_const(jv_array()), array_var);
+ 
+-  block tail = BLOCK(gen_op_bound(APPEND, array_var),
++  block tail = BLOCK(gen_op_bound(_APPEND, array_var),
+                      gen_op_simple(BACKTRACK));
+ 
+   return BLOCK(c,
+diff --git a/src/execute.c b/src/execute.c
+index 9ef8368..da004f4 100644
+--- a/src/execute.c
++++ b/src/execute.c
+@@ -479,7 +479,7 @@ jv jq_next(jq_state *jq) {
+       break;
+     }
+ 
+-    case APPEND: {
++    case _APPEND: {
+       jv v = stack_pop(jq);
+       uint16_t level = *pc++;
+       uint16_t vidx = *pc++;
+diff --git a/src/main.c b/src/main.c
+index 8323308..7d3cdb4 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -10,6 +10,8 @@
+ #include <string.h>
+ #include <unistd.h>
+ 
++#include <wasi_ext_lib.h>
++
+ #ifdef WIN32
+ #include <windows.h>
+ #include <io.h>
+@@ -303,6 +305,7 @@ int main(int argc, char* argv[]) {
+   int last_result = -1; /* -1 = no result, 0=null or false, 1=true */
+   int badwrite;
+   int options = 0;
++  char cwd[256];
+ 
+ #ifdef HAVE_SETLOCALE
+   (void) setlocale(LC_ALL, "");
+@@ -323,6 +326,11 @@ int main(int argc, char* argv[]) {
+   _setmode(fileno(stderr), _O_TEXT | _O_U8TEXT);
+ #endif
+ 
++  if (wasi_ext_getcwd(cwd, 256) == 0) {
++    wasi_ext_chdir(cwd);
++    chdir(cwd);
++  }
++
+   jv ARGS = jv_array(); /* positional arguments */
+   jv program_arguments = jv_object(); /* named arguments */
+ 
+diff --git a/src/opcode_list.h b/src/opcode_list.h
+index 85a8a58..a2151c1 100644
+--- a/src/opcode_list.h
++++ b/src/opcode_list.h
+@@ -18,7 +18,7 @@ OP(TRY_END,  NONE,   0, 0)
+ OP(JUMP,  BRANCH,   0, 0)
+ OP(JUMP_F,BRANCH,   1, 0)
+ OP(BACKTRACK, NONE, 0, 0)
+-OP(APPEND, VARIABLE,1, 0)
++OP(_APPEND, VARIABLE,1, 0)
+ OP(INSERT, NONE,    4, 2)
+ OP(RANGE, VARIABLE, 1, 1)
+ 
