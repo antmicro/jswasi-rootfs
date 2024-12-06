@@ -13,10 +13,12 @@ $(AGE_BUILD_DIR): | $(AGE_SRC_DIR)
 .PHONY: $(AGE_BUILD_DIR)/age
 $(AGE_BUILD_DIR)/age: AGE_PATCH | $(AGE_BUILD_DIR)
 	cd $(AGE_SRC_DIR) && GO111MODULE=on GOOS="wasip1" GOARCH="wasm" go build -o $(AGE_BUILD_DIR) ./cmd/age
+	wasm-strip $@
 
 .PHONY: $(AGE_BUILD_DIR)/age-keygen
 $(AGE_BUILD_DIR)/age-keygen: AGE_PATCH | $(AGE_BUILD_DIR)
 	cd $(AGE_SRC_DIR) && GO111MODULE=on GOOS="wasip1" GOARCH="wasm" go build -o $(AGE_BUILD_DIR) ./cmd/age-keygen
+	wasm-strip $@
 
 $(AGE_SRC_DIR)/.installed: | $(AGE_BUILD_DIR)/age $(AGE_BUILD_DIR)/age-keygen $(AGE_DEPENDENCIES) $(ROOTFS_DIR)
 	$(INSTALL) -D $(AGE_BUILD_DIR)/age $(ROOTFS_DIR)/usr/bin/age

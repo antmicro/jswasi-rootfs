@@ -11,16 +11,16 @@ $(eval $(call get-sources,CLANG))
 
 $(CLANG_DIST): $(CLANG_SRC_DIR) | $(RESOURCES_DIR)
 	$(INSTALL) -D $(CLANG_SRC_DIR)/clang.wasm $(CLANG_DIST)
+	wasm-strip $@
 
 $(WASM_LD_DIST): $(CLANG_SRC_DIR) | $(RESOURCES_DIR)
 	$(INSTALL) -D $(CLANG_SRC_DIR)/wasm-ld.wasm $(WASM_LD_DIST)
+	wasm-strip $@
 
 $(CLANG_SYSROOT_DIST): $(CLANG_SYSROOT_TAR) | $(RESOURCES_DIR)
 	@cp $(CLANG_SYSROOT_TAR) $(CLANG_SYSROOT_DIST)
 
 $(CLANG_SRC_DIR)/.installed: $(CLANG_DIST) $(WASM_LD_DIST) $(CLANG_SYSROOT_DIST) | $(ROOTFS_DIR)
-	$(INSTALL) -D $(CLANG_SRC_DIR)/clang.wasm $(CLANG_DIST)
-	$(INSTALL) -D $(CLANG_SRC_DIR)/wasm-ld.wasm $(WASM_LD_DIST)
 	cp -r $(CLANG_SRC_DIR)/sysroot/* $(ROOTFS_DIR)/usr
 	touch $@
 

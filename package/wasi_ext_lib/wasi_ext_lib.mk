@@ -15,6 +15,7 @@ $(WASI_EXT_LIB_PATH): | $(WASI_EXT_LIB_SRC_DIR)
 	export WASI_SDK_PATH=$(WASI_SDK_PATH) && \
 	cd $(WASI_EXT_LIB_SRC_DIR)/c_lib && \
 	make -j$(shell nproc)
+	wasm-strip $@
 
 .PHONY: WASI_EXT_LIB
 WASI_EXT_LIB: $(WASI_EXT_LIB_PATH)

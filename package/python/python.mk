@@ -9,7 +9,8 @@ $(PYTHON_BUILD_DIR): | $(BUILD_DIR)
 	mkdir -p $@
 
 $(PYTHON_BUILD_DIR)/python: | $(PYTHON_BUILD_DIR)
-	wget -qO $(PYTHON_BUILD_DIR)/python $(PYTHON_URL)/python3.wasm
+	wget -qO $@ $(PYTHON_URL)/python3.wasm
+	wasm-strip $@
 
 $(PYTHON_BUILD_DIR)/python.tar.gz: | $(WORK_DIR) $(PYTHON_BUILD_DIR)
 	wget -qO $(PYTHON_BUILD_DIR)/python.tar.gz $(PYTHON_LIB_URL)

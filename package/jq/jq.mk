@@ -18,6 +18,7 @@ $(JQ_BUILD): JQ_PATCH | $(JQ_SRC_DIR) $(JQ_DEPENDENCIES)
 	autoreconf -i && \
 	./configure --host=wasm32-wasi --target=wasm32-wasi --disable-docs --disable-valgrind --disable-maintainer-mode --with-onigurama=builtin --prefix=/usr/local && \
 	make -j$(shell nproc)
+	wasm-strip $@
 
 $(JQ_DIST): $(JQ_BUILD) | $(ROOTFS_DIR)
 	install -D $(JQ_BUILD) $(JQ_DIST)

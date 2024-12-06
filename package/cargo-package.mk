@@ -19,4 +19,5 @@ $(1): $($(1)_SRC_DIR)/.installed
 
 $($(1)_TARGET): $($(1)_SOURCES) $($(1)_SRC_DIR) $(if $($(1)_PATCHES),$(1)_PATCH,) | $(BUILD_DIR) $($(1)_DEPENDENCIES)
 	CC="$(WASI_SDK_PATH)/bin/clang" $(CARGO) build --manifest-path $($(1)_SRC_DIR)/Cargo.toml --target wasm32-wasi --release $($(1)_CARGO_OPTS)
+	wasm-strip "$$@"
 endef  # cargo-package
