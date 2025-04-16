@@ -24,8 +24,7 @@ $(RUST_CONFIG): | $(RUST_SRC_DIR) $(RUST_SRC_DIR)/.patched
 		--enable-lld \
 		--tools cargo
 
-.PHONY: $(RUST_TOOLCHAIN)
-$(RUST_TOOLCHAIN): $(RUST_CONFIG) | $(RUST_DEPENDENCIES)
+$(RUST_TOOLCHAIN): | $(RUST_CONFIG) $(RUST_DEPENDENCIES)
 	@cd $(RUST_SRC_DIR) && \
 	export PATH=$$PATH:$(RUST_SRC_DIR)/build/host/llvm/bin && \
 	./x.py build --target wasm32-wasi,x86_64-unknown-linux-gnu --stage 1
