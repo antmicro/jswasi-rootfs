@@ -1,7 +1,7 @@
 JSWASI_DEPENDENCIES := RUST WASI_SDK
 JSWASI_PKG_NAME := jswasi
 
-JSWASI_SRC_REV := 935b55caf0d0ff88c04ec50da44f9e2eb5cd4e91
+JSWASI_SRC_REV := 6f48c16b9465bdaacbd132b89bccdabd33b7fe17
 JSWASI_SRC_URL := $(call github_url,antmicro,jswasi,$(JSWASI_SRC_REV))
 
 JSWASI_DIST_DIR = $(JSWASI_SRC_DIR)/dist
