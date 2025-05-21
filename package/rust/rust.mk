@@ -1,7 +1,7 @@
 RUST_DEPENDENCIES := WASI_SDK
 RUST_PKG_NAME := rust
 
-RUST_SRC_REV := eeb90cda1969383f56a2637cbd3037bdf598841c
+RUST_SRC_REV := f6e511eec7342f59a25f7c0534f1dbea00d01b14
 RUST_SRC_URL := https://github.com/rust-lang/rust.git
 RUST_SRC_DIR := $(BUILD_DIR)/rust-$(RUST_SRC_REV)
 
