@@ -4,8 +4,8 @@ github_url = $(call get_source_url,https://github.com/%OWNER/%REPO/archive/%VERS
 define get-sources
 
 # Variables for targets
-$(eval $(1)_SRC_ZIP := $(BUILD_DIR)/$($(1)_SRC_REV).zip)
-$(eval $(1)_SRC_DIR := $(BUILD_DIR)/$($(1)_PKG_NAME)-$($(1)_SRC_REV))
+$(eval $(1)_SRC_ZIP := $$(BUILD_DIR)/$($(1)_SRC_REV).zip)
+$(eval $(1)_SRC_DIR := $$(BUILD_DIR)/$($(1)_PKG_NAME)-$($(1)_SRC_REV))
 
 # Use default alternate url for the package if provided
 $(eval $(1)_SRC_URL += $(call get_source_url,$(ALTERNATE_URL_DEFAULT),,$($(1)_PKG_NAME),$($(1)_SRC_REV)))
@@ -13,7 +13,7 @@ $(eval $(1)_SRC_URL += $(call get_source_url,$(ALTERNATE_URL_DEFAULT),,$($(1)_PK
 $(eval $(1)_SRC_URL += $(call get_source_url,$($(1)_ALTERNATE_URL),,$($(1)_PKG_NAME),$($(1)_SRC_REV)))
 
 
-$($(1)_SRC_ZIP): | $(BUILD_DIR)
+$($(1)_SRC_ZIP): | $$(BUILD_DIR)
 ifdef $(1)_SRC_ZIP_CMDS
 	$(call $(1)_SRC_ZIP_CMDS)
 else
@@ -22,7 +22,7 @@ else
 	done
 endif
 
-$($(1)_SRC_DIR): $($(1)_SRC_ZIP) | $(BUILD_DIR)
+$($(1)_SRC_DIR): $($(1)_SRC_ZIP) | $$(BUILD_DIR)
 ifdef $(1)_SRC_DIR_CMDS
 	$(call $(1)_SRC_DIR_CMDS)
 else
@@ -35,9 +35,9 @@ endef  # get-sources
 
 define get-sources-git
 
-$(eval $(1)_SRC_DIR := $(BUILD_DIR)/$($(1)_PKG_NAME)-$($(1)_SRC_REV))
+$(eval $(1)_SRC_DIR := $$(BUILD_DIR)/$($(1)_PKG_NAME)-$($(1)_SRC_REV))
 
-$($(1)_SRC_DIR): | $(BUILD_DIR)
+$($(1)_SRC_DIR): | $$(BUILD_DIR)
 ifdef $(1)_SRC_DIR_CMDS
 	$(call $(1)_SRC_DIR_CMDS)
 else
