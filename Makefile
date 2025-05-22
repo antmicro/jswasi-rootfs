@@ -13,11 +13,17 @@ include ./package/get-sources.mk
 include ./package/patch-sources.mk
 include ./package/cargo-package.mk
 
-PACKAGES_ALL := rust wasi-sdk coreutils wasibox space-invaders kibi ox wash python jswasi clang age jq wasi_ext_lib
+define PACKAGE_COMMON
+# $(1) - package directory
+
+include $(1)/$(notdir $(1)).mk
+$(eval PACKAGES_ALL += $(call uppercase,$(notdir $(1))))
+
+endef
+
+$(foreach package,$(shell find $(PACKAGE_DIR) $(PACKAGE_EXTERNAL) -maxdepth 2 -mindepth 1 -type d -print),$(eval $(call PACKAGE_COMMON,$(package))))
 PACKAGES ?= $(PACKAGES_ALL)
 PACKAGES_UPPERCASE := $(foreach package,$(PACKAGES),$(subst -,_,$(call uppercase,$(package))))
-
-$(foreach package,$(PACKAGES_ALL),$(eval include ./package/$(package)/$(package).mk))
 
 .PHONY: all
 all: $(RESOURCES_DIR)/rootfs.tar.gz
