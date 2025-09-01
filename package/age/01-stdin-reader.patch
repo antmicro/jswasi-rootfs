@@ -1,5 +1,5 @@
 diff --git a/cmd/age/tui.go b/cmd/age/tui.go
-index c0b1b13..7a0011a 100644
+index c0b1b13..ac70dfe 100644
 --- a/cmd/age/tui.go
 +++ b/cmd/age/tui.go
 @@ -14,6 +14,7 @@ package main
@@ -10,17 +10,21 @@ index c0b1b13..7a0011a 100644
  	"bytes"
  	"errors"
  	"fmt"
-@@ -123,8 +124,11 @@ func printfToTerminal(format string, v ...interface{}) error {
+@@ -121,12 +122,11 @@ func printfToTerminal(format string, v ...interface{}) error {
+ 
+ // readSecret reads a value from the terminal with no echo. The prompt is ephemeral.
  func readSecret(prompt string) (s []byte, err error) {
- 	err = withTerminal(func(in, out *os.File) error {
- 		fmt.Fprintf(out, "%s ", prompt)
+-	err = withTerminal(func(in, out *os.File) error {
+-		fmt.Fprintf(out, "%s ", prompt)
 -		defer clearLine(out)
 -		s, err = term.ReadPassword(int(in.Fd()))
-+		reader := bufio.NewReader(os.Stdin)
-+		str, err := reader.ReadString('\n')
-+		s = []byte(str)
-+		s = bytes.TrimSuffix(s, []byte{10})
-+		fmt.Print("\033[F\033[K")
- 		return err
- 	})
+-		return err
+-	})
++	reader := bufio.NewReader(os.Stdin)
++	str, err := reader.ReadString('\n')
++	s = []byte(str)
++	s = bytes.TrimSuffix(s, []byte{10})
++	fmt.Print("\033[F\033[K")
  	return
+ }
+ 
