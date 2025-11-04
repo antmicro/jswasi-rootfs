@@ -15,7 +15,8 @@ CARGO = WASI_SDK_PATH=$(WASI_SDK_PATH) cargo +wasi_extended
 # this target won't be remade when patches update
 $(RUST_CONFIG): | $(RUST_SRC_DIR) $(RUST_SRC_DIR)/.patched
 	@rm -f $(RUST_CONFIG)
-	@cd $(RUST_SRC_DIR) && \
+	@export WASI_SDK_PATH=$(WASI_SDK_PATH) && \
+	cd $(RUST_SRC_DIR) && \
 	./configure \
 		--target wasm32-wasip1 \
 		--disable-docs \
@@ -25,7 +26,8 @@ $(RUST_CONFIG): | $(RUST_SRC_DIR) $(RUST_SRC_DIR)/.patched
 		--tools cargo
 
 $(RUST_TOOLCHAIN): | $(RUST_CONFIG) $(RUST_DEPENDENCIES)
-	@cd $(RUST_SRC_DIR) && \
+	@export WASI_SDK_PATH=$(WASI_SDK_PATH) && \
+	cd $(RUST_SRC_DIR) && \
 	export PATH=$$PATH:$(RUST_SRC_DIR)/build/host/llvm/bin && \
 	./x.py build --target wasm32-wasip1,x86_64-unknown-linux-gnu --stage 1
 
