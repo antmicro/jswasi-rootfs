@@ -5,7 +5,7 @@ RUST_SRC_REV := 5dbf4069dc98bbbca98dd600a65f50c258fbfd56
 RUST_SRC_URL := https://github.com/rust-lang/rust.git
 RUST_SRC_DIR := $(BUILD_DIR)/rust-$(RUST_SRC_REV)
 
-RUST_CONFIG := $(RUST_SRC_DIR)/config.toml
+RUST_CONFIG := $(RUST_SRC_DIR)/bootstrap.toml
 RUST_PATCHES := $(wildcard $(PACKAGE_DIR)/rust/*.patch)
 
 RUST_TOOLCHAIN = $(RUST_SRC_DIR)/build/host/stage1
