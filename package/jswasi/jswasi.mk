@@ -15,7 +15,7 @@ JSWASI_INDEX = $(JSWASI_DIST_DIR)/index.html
 JSWASI_MOTD = $(JSWASI_DIST_DIR)/resources/motd.txt
 JSWASI_HTERM = $(JSWASI_DIST_DIR)/third_party/hterm.js
 
-JSWASI_SYSCALLS_TEST_TARGET = $(JSWASI_SRC_DIR)/tests/syscalls/target/wasm32-wasi/release/syscalls_test.wasm
+JSWASI_SYSCALLS_TEST_TARGET = $(JSWASI_SRC_DIR)/tests/syscalls/target/wasm32-wasip1/release/syscalls_test.wasm
 JSWASI_SYSCALLS_TEST_DIST := $(RESOURCES_DIR)/syscalls_test
 
 
