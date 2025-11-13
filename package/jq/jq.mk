@@ -16,7 +16,7 @@ $(JQ_BUILD): JQ_PATCH | $(JQ_SRC_DIR) $(JQ_DEPENDENCIES)
 	export LDFLAGS="$(LDFLAGS) -L$(WASI_EXT_LIB_LD_PATH) -lwasi_ext_lib -lwasi-emulated-signal" && \
 	cd $(JQ_SRC_DIR) && \
 	autoreconf -i && \
-	./configure --host=wasm32-wasi --target=wasm32-wasi --disable-docs --disable-valgrind --disable-maintainer-mode --with-onigurama=builtin --prefix=/usr/local && \
+	./configure --host=wasm32-wasip1 --target=wasm32-wasip1 --disable-docs --disable-valgrind --disable-maintainer-mode --with-onigurama=builtin --prefix=/usr/local && \
 	make -j$(shell nproc)
 	wasm-strip $@
 

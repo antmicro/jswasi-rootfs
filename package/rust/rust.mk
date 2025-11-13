@@ -17,9 +17,9 @@ $(RUST_CONFIG): | $(RUST_SRC_DIR) $(RUST_SRC_DIR)/.patched
 	@rm -f $(RUST_CONFIG)
 	@cd $(RUST_SRC_DIR) && \
 	./configure \
-		--target wasm32-wasi \
+		--target wasm32-wasip1 \
 		--disable-docs \
-		--set target.wasm32-wasi.wasi-root=$(WASI_SDK_PATH)/share/wasi-sysroot \
+		--set target.wasm32-wasip1.wasi-root=$(WASI_SDK_PATH)/share/wasi-sysroot \
 		--set llvm.download-ci-llvm=false \
 		--enable-lld \
 		--tools cargo
@@ -27,7 +27,7 @@ $(RUST_CONFIG): | $(RUST_SRC_DIR) $(RUST_SRC_DIR)/.patched
 $(RUST_TOOLCHAIN): | $(RUST_CONFIG) $(RUST_DEPENDENCIES)
 	@cd $(RUST_SRC_DIR) && \
 	export PATH=$$PATH:$(RUST_SRC_DIR)/build/host/llvm/bin && \
-	./x.py build --target wasm32-wasi,x86_64-unknown-linux-gnu --stage 1
+	./x.py build --target wasm32-wasip1,x86_64-unknown-linux-gnu --stage 1
 
 # TODO: Don't install the toolchain globally, use local rustup
 .PHONY: RUST_TOOLCHAIN_LINK
