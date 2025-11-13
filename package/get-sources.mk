@@ -41,11 +41,12 @@ $($(1)_SRC_DIR): | $$(BUILD_DIR)
 ifdef $(1)_SRC_DIR_CMDS
 	$(call $(1)_SRC_DIR_CMDS)
 else
-	@git clone $($(1)_SRC_URL) $($(1)_SRC_DIR) && \
+	@git clone --no-checkout --depth 1 $($(1)_SRC_URL) $($(1)_SRC_DIR) && \
 	cd $($(1)_SRC_DIR) && \
-	git reset --hard $($(1)_SRC_REV) && \
+	git fetch --depth 1 origin $($(1)_SRC_REV) && \
+	git checkout $($(1)_SRC_REV) && \
 	git clean -df && \
-	git submodule update --init --recursive
+	git submodule update --init --recursive --depth 1
 endif
 
 endef  # get-sources-git
