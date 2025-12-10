@@ -3,8 +3,9 @@ CLANG_PKG_NAME := clang
 CLANG_SRC_REV := 5b36e27758085fa5b11c30de25e4ed80edaf365f
 CLANG_SRC_URL := $(call github_url,wapm-packages,clang,$(CLANG_SRC_REV))
 
-CLANG_DIST := $(ROOTFS_DIR)/usr/bin/clang
+CLANG_DIST := $(ROOTFS_DIR)/usr/bin/clangc
 WASM_LD_DIST := $(ROOTFS_DIR)/usr/bin/wasm-ld
+CLANG_WRAPPER := $(ROOTFS_DIR)/usr/bin/clang
 
 
 $(eval $(call get-sources,CLANG))
@@ -17,10 +18,13 @@ $(WASM_LD_DIST): $(CLANG_SRC_DIR) | $(RESOURCES_DIR)
 	$(INSTALL) -D $(CLANG_SRC_DIR)/wasm-ld.wasm $(WASM_LD_DIST)
 	wasm-strip $@
 
+$(CLANG_WRAPPER): $(CLANG_SRC_DIR) | $(RESOURCES_DIR)
+	$(INSTALL) -D $(PACKAGE_DIR)/clang/clang-wrapper.sh $(CLANG_WRAPPER)
+
 $(CLANG_SYSROOT_DIST): $(CLANG_SYSROOT_TAR) | $(RESOURCES_DIR)
 	@cp $(CLANG_SYSROOT_TAR) $(CLANG_SYSROOT_DIST)
 
-$(CLANG_SRC_DIR)/.installed: $(CLANG_DIST) $(WASM_LD_DIST) $(CLANG_SYSROOT_DIST) | $(ROOTFS_DIR)
+$(CLANG_SRC_DIR)/.installed: $(CLANG_DIST) $(WASM_LD_DIST) $(CLANG_WRAPPER) $(CLANG_SYSROOT_DIST) | $(ROOTFS_DIR)
 	cp -r $(CLANG_SRC_DIR)/sysroot/* $(ROOTFS_DIR)/usr
 	touch $@
 
