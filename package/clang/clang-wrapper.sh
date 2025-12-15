@@ -14,9 +14,13 @@ while [ $# -gt 1 ]; do
   if [ $arg = "-emit-obj" ]; then
     only_compile=1
   elif [ $arg = "-o" ]; then
-    output_file=$1
+    arg_file=$1
+    output_file=$(realpath $arg_file)
     shift
   else
+    if [ -f "$arg" ]; then
+      arg=$(realpath $arg)
+    fi
     if [ $args == " " ]; then
       args="$arg"
     else
