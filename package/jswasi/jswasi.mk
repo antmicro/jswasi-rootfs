@@ -51,7 +51,7 @@ $(THIRD_PARTY_DIR)/hterm.js: $(JSWASI_HTERM) | $(THIRD_PARTY_DIR)
 $(JSWASI_SRC_DIR)/.installed: $(JSWASI_MOTD) $(THIRD_PARTY_DIR)/hterm.js $(RESOURCES_DIR)/config.json $(DIST_DIR)/index.html $(RESOURCES_DIR)/vfs_config.json $(JSWASI_SYSCALLS_TEST_DIST) | $(DIST_DIR) $(ROOTFS_DIR) $(RESOURCES_DIR) $(JSWASI_DEPENENCIES) $(JSWASI_DIST_DIR)
 	cp -r $(JSWASI_DIST_DIR)/* $(DIST_DIR)
 	$(INSTALL) -D $(JSWASI_MOTD) $(ROOTFS_DIR)/etc/motd
-	mkdir -p $(ROOTFS_DIR)/tmp $(ROOTFS_DIR)/mnt $(ROOTFS_DIR)/proc $(ROOTFS_DIR)/dev
+	mkdir -p $(ROOTFS_DIR)/tmp $(ROOTFS_DIR)/mnt $(ROOTFS_DIR)/proc $(ROOTFS_DIR)/dev $(ROOTFS_DIR)/usr/bin
 	# Browser apps
 	touch $(ROOTFS_DIR)/usr/bin/ps
 	touch $(ROOTFS_DIR)/usr/bin/free
