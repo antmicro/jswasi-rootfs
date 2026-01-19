@@ -61,12 +61,12 @@ $(JSWASI_SRC_DIR)/.installed: $(JSWASI_MOTD) $(THIRD_PARTY_DIR)/hterm.js $(RESOU
 .PHONY: JSWASI
 JSWASI: $(JSWASI_SRC_DIR)/.installed
 
-.PHONY: JSWASI_CLEAN
-JSWASI_CLEAN:
-	cd $(JSWASI_SRC_DIR) && \
-	make clean-all
-
 .PHONY: JSWASI_RUN_TESTS
 JSWASI_RUN_TESTS: $(JSWASI_SRC_DIR)
 	cd $(JSWASI_SRC_DIR) && \
 	make test
+
+.PHONY: JSWASI_CLEAN
+JSWASI_CLEAN:
+	cd $(JSWASI_SRC_DIR) && \
+	make clean-all

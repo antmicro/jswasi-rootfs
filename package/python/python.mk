@@ -21,5 +21,9 @@ $(PYTHON_BUILD_DIR)/.installed: $(PYTHON_BUILD_DIR)/python.tar.gz $(PYTHON_BUILD
 	tar -xvf $(PYTHON_BUILD_DIR)/python.tar.gz -C $(ROOTFS_DIR)/lib
 	touch $@
 
+define PYTHON_CLEAN_CMDS_EXTRA
+	rm -rf $(PYTHON_BUILD_DIR)
+endef
+
 .PHONY: PYTHON
 PYTHON: $(PYTHON_BUILD_DIR)/.installed
