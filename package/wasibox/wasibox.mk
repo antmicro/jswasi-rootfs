@@ -21,6 +21,7 @@ define WASIBOX_INSTALL_CMDS_EXTRA
 	ln -fs $(WASIBOX_ROOTFS_PATH) $(ROOTFS_DIR)/usr/bin/websocat
 	ln -fs $(WASIBOX_ROOTFS_PATH) $(ROOTFS_DIR)/usr/bin/wget
 	ln -fs $(WASIBOX_ROOTFS_PATH) $(ROOTFS_DIR)/usr/bin/mknod
+	ln -fs $(WASIBOX_ROOTFS_PATH) $(ROOTFS_DIR)/usr/bin/uname
 
 	mkdir -p $(ROOTFS_DIR)/etc/init.d
 endef
