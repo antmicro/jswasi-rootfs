@@ -26,7 +26,7 @@ $(eval $(call apply-patches,JSWASI))
 $(RESOURCES_DIR)/%: $(PACKAGE_DIR)/jswasi/% | $(RESOURCES_DIR)
 	cp $< $@
 
-$(JSWASI_SYSCALLS_TEST_TARGET): $(JSWASI_SRC_DIR)
+$(JSWASI_SYSCALLS_TEST_TARGET): $(JSWASI_SRC_DIR) | RUST
 	CC="$(WASI_SDK_PATH)/bin/clang" $(CARGO) build --manifest-path $(JSWASI_SRC_DIR)/tests/syscalls/Cargo.toml --target wasm32-wasip1 --release
 	wasm-strip $@
 
@@ -48,7 +48,7 @@ $(DIST_DIR)/index.html: $(JSWASI_INDEX) | $(DIST_DIR)
 $(THIRD_PARTY_DIR)/hterm.js: $(JSWASI_HTERM) | $(THIRD_PARTY_DIR)
 	cp $< $@
 
-$(JSWASI_SRC_DIR)/.installed: $(JSWASI_MOTD) $(THIRD_PARTY_DIR)/hterm.js $(RESOURCES_DIR)/config.json $(DIST_DIR)/index.html $(RESOURCES_DIR)/vfs_config.json $(JSWASI_SYSCALLS_TEST_DIST) | $(DIST_DIR) $(ROOTFS_DIR) $(RESOURCES_DIR) $(JSWASI_DEPENENCIES) $(JSWASI_DIST_DIR)
+$(JSWASI_SRC_DIR)/.installed: $(JSWASI_MOTD) $(THIRD_PARTY_DIR)/hterm.js $(RESOURCES_DIR)/config.json $(DIST_DIR)/index.html $(RESOURCES_DIR)/vfs_config.json $(JSWASI_SYSCALLS_TEST_DIST) | $(DIST_DIR) $(ROOTFS_DIR) $(RESOURCES_DIR) $(JSWASI_DEPENDENCIES) $(JSWASI_DIST_DIR)
 	cp -r $(JSWASI_DIST_DIR)/* $(DIST_DIR)
 	$(INSTALL) -D $(JSWASI_MOTD) $(ROOTFS_DIR)/etc/motd
 	mkdir -p $(ROOTFS_DIR)/tmp $(ROOTFS_DIR)/mnt $(ROOTFS_DIR)/proc $(ROOTFS_DIR)/dev $(ROOTFS_DIR)/usr/bin
