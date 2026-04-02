@@ -1,3 +1,5 @@
+#!/usr/bin/wash
+
 only_compile=0
 
 output_file=""
