@@ -1,7 +1,7 @@
 JSWASI_DEPENDENCIES := RUST WASI_SDK
 JSWASI_PKG_NAME := jswasi
 
-JSWASI_SRC_REV := b86f309234258b5415411dfe0ea1369d77925ff0
+JSWASI_SRC_REV := d7c0261f8235c7b4263c0fe3fee5425dea8d31b8
 JSWASI_SRC_URL := $(call github_url,antmicro,jswasi,$(JSWASI_SRC_REV))
 
 JSWASI_DIST_DIR = $(JSWASI_SRC_DIR)/dist
@@ -52,10 +52,6 @@ $(JSWASI_SRC_DIR)/.installed: $(JSWASI_MOTD) $(THIRD_PARTY_DIR)/hterm.js $(RESOU
 	cp -r $(JSWASI_DIST_DIR)/* $(DIST_DIR)
 	$(INSTALL) -D $(JSWASI_MOTD) $(ROOTFS_DIR)/etc/motd
 	mkdir -p $(ROOTFS_DIR)/tmp $(ROOTFS_DIR)/mnt $(ROOTFS_DIR)/proc $(ROOTFS_DIR)/dev $(ROOTFS_DIR)/usr/bin
-	# Browser apps
-	touch $(ROOTFS_DIR)/usr/bin/ps
-	touch $(ROOTFS_DIR)/usr/bin/free
-	touch $(ROOTFS_DIR)/usr/bin/reset
 	touch $(JSWASI_SRC_DIR)/.installed
 
 .PHONY: JSWASI
