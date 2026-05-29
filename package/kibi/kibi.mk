@@ -1,7 +1,7 @@
 KIBI_DEPENDENCIES := RUST WASI_SDK
 KIBI_PKG_NAME := kibi
 
-KIBI_SRC_REV := 7b1e1068813875242b2c8c230d6fb71fd5b4b4d5
+KIBI_SRC_REV := aafa03f8c1aee810e19305dc0c477a3641eeb29d
 KIBI_SRC_URL := $(call github_url,antmicro,kibi,$(KIBI_SRC_REV))
 
 KIBI_DIST := $(ROOTFS_DIR)/usr/local/bin/kibi

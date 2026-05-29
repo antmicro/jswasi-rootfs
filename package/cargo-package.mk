@@ -1,7 +1,7 @@
 define cargo-package
 
 $(eval $(1)_SOURCES := $(shell find $($(1)_SRC_DIR) -type f -name '*.rs'))
-$(eval $(1)_TARGET := $($(1)_SRC_DIR)/target/wasm32-wasip1/release/$($(1)_PKG_NAME).wasm)
+$(eval $(1)_TARGET := $($(1)_SRC_DIR)/target/wasm32-wasip1-threads/release/$($(1)_PKG_NAME).wasm)
 
 $($(1)_SRC_DIR)/.installed: | $($(1)_DEPENDENCIES) $($(1)_TARGET) $$(ROOTFS_DIR)
 	@echo "INFO: Installing cargo package $(1)..."
@@ -20,6 +20,6 @@ $(1): $($(1)_SRC_DIR)/.installed
 
 $($(1)_TARGET): $($(1)_SOURCES) $($(1)_SRC_DIR) $(if $($(1)_PATCHES),$(1)_PATCH,) | $$(BUILD_DIR) $($(1)_DEPENDENCIES)
 	@echo "INFO: Building cargo package $(1)..."
-	CC="$$(WASI_SDK_PATH)/bin/clang" $$(CARGO) build --manifest-path $$($(1)_SRC_DIR)/Cargo.toml --target wasm32-wasip1 --release $($(1)_CARGO_OPTS)
+	CC="$$(WASI_SDK_PATH)/bin/clang" RUSTFLAGS="-C target-feature=-crt-static,+atomics,+bulk-memory,+mutable-globals -C link-arg=--import-memory -C link-arg=--shared-memory -C link-arg=--max-memory=4294967296" $$(CARGO) build --manifest-path $$($(1)_SRC_DIR)/Cargo.toml --target wasm32-wasip1-threads --release $($(1)_CARGO_OPTS)
 	wasm-strip "$$@"
 endef  # cargo-package

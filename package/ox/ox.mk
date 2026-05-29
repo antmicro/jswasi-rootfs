@@ -1,7 +1,7 @@
 OX_DEPENDENCIES := RUST WASI_SDK
 OX_PKG_NAME := ox
 
-OX_SRC_REV := ff1fbd2b9947f69b2f8f4d63b62ebbfc801c38bf
+OX_SRC_REV := f2fb9c69e8866fc72186ca93cf4ba205ba163672
 OX_SRC_URL := $(call github_url,antmicro,ox,$(OX_SRC_REV))
 
 OX_DIST := $(ROOTFS_DIR)/usr/local/bin/ox
