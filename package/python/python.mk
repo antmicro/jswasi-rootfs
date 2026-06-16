@@ -1,4 +1,4 @@
-PYTHON_DEPENDENCIES := WASI_SDK
+PYTHON_DEPENDENCIES := WASI_SDK WASI_EXT_LIB
 PYTHON_PKG_NAME := python
 
 PYTHON_SRC_REV := v3.14.5
@@ -20,11 +20,13 @@ WASI_ENV = AR=$(WASI_SDK_PATH)/bin/llvm-ar \
 		CC=$(WASI_SDK_PATH)/bin/clang \
 		CPP=$(WASI_SDK_PATH)/bin/clang-cpp \
 		CXX=$(WASI_SDK_PATH)/bin/clang++ \
+		CFLAGS="$${CFLAGS} -I$(WASI_EXT_LIB_INCLUDE_PATH)" \
 		CONFIG_SITE=$(PYTHON_SRC_DIR)/Tools/wasm/wasi/config.site-wasm32-wasi \
 		PKG_CONFIG_SYSROOT_DIR=$(WASI_SDK_PATH)/share/wasi-sysroot \
 		PKG_CONFIG_LIBDIR=$(WASI_SDK_PATH)/share/wasi-sysroot/lib/pkgconfig:$(WASI_SDK_PATH)/share/wasi-sysroot/share/pkgconfig \
 		RANLIB=$(WASI_SDK_PATH)/bin/ranlib \
-		WASI_SYSROOT=$(WASI_SDK_PATH)/share/wasi-sysroot
+		WASI_SYSROOT=$(WASI_SDK_PATH)/share/wasi-sysroot \
+		LDFLAGS="$${LDFLAGS} -L$(WASI_EXT_LIB_LD_PATH) -lwasi_ext_lib"
 
 $(eval $(call get-sources,PYTHON))
 
