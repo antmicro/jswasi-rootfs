@@ -12,7 +12,7 @@ JQ_PATCHES := $(wildcard $(PACKAGE_DIR)/jq/*.patch)
 
 $(JQ_BUILD): JQ_PATCH | $(JQ_SRC_DIR) $(JQ_DEPENDENCIES)
 	export CC="$(WASI_SDK_PATH)/bin/clang" && \
-	export CFLAGS="-O2 -D_WASI_EMULATED_SIGNAL -I $(WASI_EXT_LIB_INLUDE_PATH) $(CFLAGS)" && \
+	export CFLAGS="-O2 -D_WASI_EMULATED_SIGNAL -I $(WASI_EXT_LIB_INCLUDE_PATH) $(CFLAGS)" && \
 	export LDFLAGS="$(LDFLAGS) -L$(WASI_EXT_LIB_LD_PATH) -lwasi_ext_lib -lwasi-emulated-signal" && \
 	cd $(JQ_SRC_DIR) && \
 	autoreconf -i && \
