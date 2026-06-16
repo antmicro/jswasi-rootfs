@@ -36,7 +36,7 @@ build_local_python: | $(PYTHON_SRC_DIR)
 	../../configure --disable-test-modules --with-ensurepip=no && \
 	make -j $(shell nproc)
 
-build_python_wasi: build_local_python $(PYTHON_DEPENDENCIES)
+build_python_wasi: build_local_python $(PYTHON_DEPENDENCIES) $(PYTHON_SRC_DIR)/.patched
 	cd $(PYTHON_SRC_DIR) && \
 	sed -i 's|--max-memory=[0-9]*|--max-memory=4294967296|g' ./configure.ac && \
 	autoconf -f && \
@@ -66,3 +66,4 @@ define PYTHON_CLEAN_CMDS_EXTRA
 	rm -rf $(PYTHON_BUILD_DIR)
 endef
 
+$(eval $(call apply-patches,PYTHON))

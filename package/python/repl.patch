@@ -1,0 +1,21 @@
+diff --git a/Modules/main.c b/Modules/main.c
+index 15f51ac..e70881e 100644
+--- a/Modules/main.c
++++ b/Modules/main.c
+@@ -565,13 +565,9 @@ pymain_run_stdin(PyConfig *config)
+         return pymain_exit_err_print();
+     }
+ 
+-    if (!isatty(fileno(stdin))
+-        || _Py_GetEnv(config->use_environment, "PYTHON_BASIC_REPL")) {
+-        PyCompilerFlags cf = _PyCompilerFlags_INIT;
+-        int run = PyRun_AnyFileExFlags(stdin, "<stdin>", 0, &cf);
+-        return (run != 0);
+-    }
+-    return pymain_start_pyrepl(0);
++    PyCompilerFlags cf = _PyCompilerFlags_INIT;
++    int run = PyRun_AnyFileExFlags(stdin, "<stdin>", 0, &cf);
++    return (run != 0);
+ }
+ 
+ 
