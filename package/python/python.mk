@@ -16,7 +16,9 @@ GNU_BUILD_PATH = $(PYTHON_SRC_DIR)/cross-build/x86_64-pc-linux-gnu
 TARGET_BUILD_PATH = $(PYTHON_SRC_DIR)/cross-build/wasm32-wasip1-threads
 TARGET_BUILD_LIB_PATH = $(TARGET_BUILD_PATH)/lib/python$(PYTHON_VERSION_NOPATCH)
 
-WASI_ENV = AR=$(WASI_SDK_PATH)/bin/llvm-ar \
+WASI_ENV = PKG_CONFIG_PATH= \
+		NIX_CFLAGS_COMPILE= \
+		AR=$(WASI_SDK_PATH)/bin/llvm-ar \
 		CC=$(WASI_SDK_PATH)/bin/clang \
 		CPP=$(WASI_SDK_PATH)/bin/clang-cpp \
 		CXX=$(WASI_SDK_PATH)/bin/clang++ \
@@ -32,11 +34,15 @@ $(eval $(call get-sources,PYTHON))
 
 # Building for WASI requires doing a cross-build where
 # you have a build Python to help produce a WASI build of CPython
-build_local_python: | $(PYTHON_SRC_DIR)
+PYTHON_LOCAL_DONE = $(PYTHON_SRC_DIR)/.build-local-done
+build_local_python: $(PYTHON_LOCAL_DONE)
+
+$(PYTHON_LOCAL_DONE): | $(PYTHON_SRC_DIR)
 	mkdir -p $(GNU_BUILD_PATH) && \
 	cd $(GNU_BUILD_PATH) && \
 	../../configure --disable-test-modules --with-ensurepip=no && \
 	make -j $(shell nproc)
+	touch $@
 
 build_python_wasi: build_local_python $(PYTHON_DEPENDENCIES) $(PYTHON_SRC_DIR)/.patched
 	cd $(PYTHON_SRC_DIR) && \
@@ -65,7 +71,7 @@ PYTHON: $(PYTHON_BUILD) remove_lib_buildfiles
 .PHONY: PYTHON build_local_python build_python_wasi remove_lib_buildfiles
 
 define PYTHON_CLEAN_CMDS_EXTRA
-	rm -rf $(PYTHON_BUILD_DIR)
+	rm -rf $(PYTHON_BUILD_DIR) $(PYTHON_LOCAL_DONE)
 endef
 
 $(eval $(call apply-patches,PYTHON))
