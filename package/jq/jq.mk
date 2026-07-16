@@ -8,9 +8,7 @@ JQ_SRC_DIR := $(BUILD_DIR)/jq-$(JQ_SRC_REV)
 JQ_BUILD := $(JQ_SRC_DIR)/jq
 JQ_DIST := $(ROOTFS_DIR)/usr/bin/jq
 
-JQ_PATCHES := $(wildcard $(PACKAGE_DIR)/jq/*.patch)
-
-$(JQ_BUILD): JQ_PATCH | $(JQ_SRC_DIR) $(JQ_DEPENDENCIES)
+$(JQ_BUILD): | $(JQ_SRC_DIR) $(JQ_DEPENDENCIES)
 	export CC="$(WASI_SDK_PATH)/bin/clang" && \
 	export CFLAGS="-O2 -D_WASI_EMULATED_SIGNAL -I $(WASI_EXT_LIB_INCLUDE_PATH) $(CFLAGS)" && \
 	export LDFLAGS="$(LDFLAGS) -L$(WASI_EXT_LIB_LD_PATH) -lwasi_ext_lib -lwasi-emulated-signal" && \
@@ -27,4 +25,3 @@ $(JQ_DIST): $(JQ_BUILD) | $(ROOTFS_DIR)
 JQ: $(JQ_DIST)
 
 $(eval $(call get-sources-git,JQ))
-$(eval $(call apply-patches,JQ))
