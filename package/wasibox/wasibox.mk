@@ -1,7 +1,7 @@
 WASIBOX_DEPENDENCIES := RUST WASI_SDK
 WASIBOX_PKG_NAME := wasibox
 
-WASIBOX_SRC_REV := c5fab443512e36938eea4141d30b4b69c14caf7e
+WASIBOX_SRC_REV := cb5f126b264a080e2e9cf77ef4ce13cf5c600bd2
 WASIBOX_SRC_URL := $(call github_url,antmicro,wasibox,$(WASIBOX_SRC_REV))
 
 WASIBOX_ROOTFS_PATH := /usr/bin/wasibox
