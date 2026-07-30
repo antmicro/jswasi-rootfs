@@ -11,7 +11,8 @@ JQ_DIST := $(ROOTFS_DIR)/usr/bin/jq
 $(JQ_BUILD): | $(JQ_SRC_DIR) $(JQ_DEPENDENCIES)
 	export CC="$(WASI_SDK_PATH)/bin/clang" && \
 	export CFLAGS="-O2 -D_WASI_EMULATED_SIGNAL -I $(WASI_EXT_LIB_INCLUDE_PATH) $(CFLAGS)" && \
-	export LDFLAGS="$(LDFLAGS) -L$(WASI_EXT_LIB_LD_PATH) -lwasi_ext_lib -lwasi-emulated-signal" && \
+	export LDFLAGS="$(LDFLAGS) -L$(WASI_EXT_LIB_LD_PATH)" && \
+	export LIBS="-Wl,--whole-archive,-lwasi_ext_lib,--no-whole-archive -lwasi-emulated-signal" && \
 	cd $(JQ_SRC_DIR) && \
 	autoreconf -i && \
 	./configure --host=wasm32-wasip1 --target=wasm32-wasip1 --disable-docs --disable-valgrind --disable-maintainer-mode --with-onigurama=builtin --prefix=/usr/local && \
