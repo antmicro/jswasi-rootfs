@@ -28,7 +28,7 @@ WASI_ENV = PKG_CONFIG_PATH= \
 		PKG_CONFIG_LIBDIR=$(WASI_SDK_PATH)/share/wasi-sysroot/lib/pkgconfig:$(WASI_SDK_PATH)/share/wasi-sysroot/share/pkgconfig \
 		RANLIB=$(WASI_SDK_PATH)/bin/ranlib \
 		WASI_SYSROOT=$(WASI_SDK_PATH)/share/wasi-sysroot \
-		LDFLAGS="$${LDFLAGS} -L$(WASI_EXT_LIB_LD_PATH) -lwasi_ext_lib"
+		LDFLAGS="$${LDFLAGS} -L$(WASI_EXT_LIB_LD_PATH) -Wl,--whole-archive -lwasi_ext_lib -Wl,--no-whole-archive"
 
 $(eval $(call get-sources,PYTHON))
 
