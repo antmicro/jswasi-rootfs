@@ -1,7 +1,7 @@
 WASIBOX_DEPENDENCIES := RUST WASI_SDK
 WASIBOX_PKG_NAME := wasibox
 
-WASIBOX_SRC_REV := cb5f126b264a080e2e9cf77ef4ce13cf5c600bd2
+WASIBOX_SRC_REV := db7b90b37c9121fe666a6f66b097ac7dce7311db
 WASIBOX_SRC_URL := $(call github_url,antmicro,wasibox,$(WASIBOX_SRC_REV))
 
 WASIBOX_ROOTFS_PATH := /usr/bin/wasibox
@@ -25,6 +25,7 @@ define WASIBOX_INSTALL_CMDS_EXTRA
 	ln -fs $(WASIBOX_ROOTFS_PATH) $(ROOTFS_DIR)/usr/bin/free
 	ln -fs $(WASIBOX_ROOTFS_PATH) $(ROOTFS_DIR)/usr/bin/ps
 	ln -fs $(WASIBOX_ROOTFS_PATH) $(ROOTFS_DIR)/usr/bin/reset
+	ln -fs $(WASIBOX_ROOTFS_PATH) $(ROOTFS_DIR)/usr/bin/reload
 
 	mkdir -p $(ROOTFS_DIR)/etc/init.d
 endef
