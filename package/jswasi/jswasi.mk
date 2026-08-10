@@ -18,6 +18,8 @@ JSWASI_HTERM = $(JSWASI_DIST_DIR)/third_party/hterm.js
 JSWASI_SYSCALLS_TEST_TARGET = $(JSWASI_SRC_DIR)/tests/syscalls/target/wasm32-wasip1/release/syscalls_test.wasm
 JSWASI_SYSCALLS_TEST_DIST := $(RESOURCES_DIR)/syscalls_test
 
+JSWASI_INSTALL_INDEX ?= 1
+
 
 $(eval $(call get-sources,JSWASI))
 $(eval $(call apply-patches,JSWASI))
@@ -42,14 +44,12 @@ $(JSWASI_MOTD) $(JSWASI_INDEX) $(JSWASI_HTERM): %: $(JSWASI_DIST_DIR)
 	cd $(JSWASI_SRC_DIR) && \
 	make MINIFY=$(JSWASI_MINIFY) $@
 
-$(DIST_DIR)/index.html: $(JSWASI_INDEX) | $(DIST_DIR)
-	cp $< $@
-
 $(THIRD_PARTY_DIR)/hterm.js: $(JSWASI_HTERM) | $(THIRD_PARTY_DIR)
 	cp $< $@
 
-$(JSWASI_SRC_DIR)/.installed: $(JSWASI_MOTD) $(THIRD_PARTY_DIR)/hterm.js $(RESOURCES_DIR)/config.json $(DIST_DIR)/index.html $(RESOURCES_DIR)/vfs_config.json $(JSWASI_SYSCALLS_TEST_DIST) | $(DIST_DIR) $(ROOTFS_DIR) $(RESOURCES_DIR) $(JSWASI_DEPENDENCIES) $(JSWASI_DIST_DIR)
+$(JSWASI_SRC_DIR)/.installed: $(JSWASI_MOTD) $(THIRD_PARTY_DIR)/hterm.js $(RESOURCES_DIR)/config.json $(RESOURCES_DIR)/vfs_config.json $(JSWASI_SYSCALLS_TEST_DIST) $(JSWASI_INDEX) | $(DIST_DIR) $(ROOTFS_DIR) $(RESOURCES_DIR) $(JSWASI_DEPENDENCIES) $(JSWASI_DIST_DIR)
 	cp -r $(JSWASI_DIST_DIR)/* $(DIST_DIR)
+	if [ "$(JSWASI_INSTALL_INDEX)" = "1" ]; then cp $(JSWASI_INDEX) $(DIST_DIR)/index.html; fi
 	$(INSTALL) -D $(JSWASI_MOTD) $(ROOTFS_DIR)/etc/motd
 	mkdir -p $(ROOTFS_DIR)/tmp $(ROOTFS_DIR)/mnt $(ROOTFS_DIR)/proc $(ROOTFS_DIR)/dev $(ROOTFS_DIR)/usr/bin
 	touch $(JSWASI_SRC_DIR)/.installed
