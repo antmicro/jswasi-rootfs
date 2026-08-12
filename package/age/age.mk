@@ -1,3 +1,4 @@
+AGE_DEPENDENCIES := WASI_SDK
 AGE_PKG_NAME := age
 AGE_SRC_REV := bbe6ce5eeb1bb70cfc705d0961c943f0dd637ffd
 AGE_SRC_URL := $(call github_url,FiloSottile,age,$(AGE_SRC_REV))
