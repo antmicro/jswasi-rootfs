@@ -7,7 +7,6 @@ CLANG_DIST := $(ROOTFS_DIR)/usr/bin/clangc
 WASM_LD_DIST := $(ROOTFS_DIR)/usr/bin/wasm-ld
 CLANG_WRAPPER := $(ROOTFS_DIR)/usr/bin/clang
 
-
 $(eval $(call get-sources,CLANG))
 
 $(CLANG_DIST): $(CLANG_SRC_DIR) | $(RESOURCES_DIR)

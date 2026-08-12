@@ -18,19 +18,18 @@ TARGET_BUILD_PATH = $(PYTHON_SRC_DIR)/cross-build/$(WASI_TARGET_THREADS)
 TARGET_BUILD_LIB_PATH = $(TARGET_BUILD_PATH)/lib/python$(PYTHON_VERSION_NOPATCH)
 
 WASI_ENV = PKG_CONFIG_PATH= \
-		NIX_CFLAGS_COMPILE= \
-		AR=$(WASI_SDK_AR) \
-		CC=$(WASI_SDK_CLANG) \
-		CPP=$(WASI_SDK_PATH)/bin/clang-cpp \
-		CXX=$(WASI_SDK_PATH)/bin/clang++ \
-		CFLAGS="$${CFLAGS} -I$(SYSROOT_THREADS_INC) -I$(SYSROOT_INC)" \
-		CONFIG_SITE=$(PYTHON_SRC_DIR)/Tools/wasm/wasi/config.site-wasm32-wasi \
-		PKG_CONFIG_SYSROOT_DIR=$(WASI_SDK_SYSROOT) \
-		PKG_CONFIG_LIBDIR=$(WASI_SDK_SYSROOT)/lib/pkgconfig:$(WASI_SDK_SYSROOT)/share/pkgconfig \
-		RANLIB=$(WASI_SDK_RANLIB) \
-		WASI_SYSROOT=$(WASI_SDK_SYSROOT) \
-		LDFLAGS="$${LDFLAGS} -L$(SYSROOT_THREADS_LIB) -L$(SYSROOT_LIB) -Wl,--whole-archive -lwasi_ext_lib -Wl,--no-whole-archive"
-
+	NIX_CFLAGS_COMPILE= \
+	AR=$(WASI_SDK_AR) \
+	CC=$(WASI_SDK_CLANG) \
+	CPP=$(WASI_SDK_PATH)/bin/clang-cpp \
+	CXX=$(WASI_SDK_PATH)/bin/clang++ \
+	CFLAGS="$${CFLAGS} -I$(SYSROOT_THREADS_INC) -I$(SYSROOT_INC)" \
+	CONFIG_SITE=$(PYTHON_SRC_DIR)/Tools/wasm/wasi/config.site-wasm32-wasi \
+	PKG_CONFIG_SYSROOT_DIR=$(WASI_SDK_SYSROOT) \
+	PKG_CONFIG_LIBDIR=$(WASI_SDK_SYSROOT)/lib/pkgconfig:$(WASI_SDK_SYSROOT)/share/pkgconfig \
+	RANLIB=$(WASI_SDK_RANLIB) \
+	WASI_SYSROOT=$(WASI_SDK_SYSROOT) \
+	LDFLAGS="$${LDFLAGS} -L$(SYSROOT_THREADS_LIB) -L$(SYSROOT_LIB) -Wl,--whole-archive -lwasi_ext_lib -Wl,--no-whole-archive"
 
 $(eval $(call get-sources,PYTHON))
 
