@@ -10,7 +10,7 @@ JQ_DIST := $(ROOTFS_DIR)/usr/bin/jq
 
 $(JQ_BUILD): | $(JQ_SRC_DIR) $(JQ_DEPENDENCIES)
 	export CC="$(WASI_SDK_CLANG)" && \
-	export CFLAGS="-O2 -D_WASI_EMULATED_SIGNAL -mthread-model single -mno-atomics -mno-bulk-memory -I $(SYSROOT_INC) $(CFLAGS)" && \
+	export CFLAGS="-O2 -std=gnu99 -D_WASI_EMULATED_SIGNAL -mthread-model single -mno-atomics -mno-bulk-memory -Wno-incompatible-function-pointer-types -I $(SYSROOT_INC) $(CFLAGS)" && \
 	export LDFLAGS="$(LDFLAGS) -L$(SYSROOT_LIB)" && \
 	export LIBS="-Wl,--whole-archive,-lwasi_ext_lib,--no-whole-archive -lwasi-emulated-signal" && \
 	cd $(JQ_SRC_DIR) && \
