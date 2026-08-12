@@ -11,10 +11,12 @@ WASI_SDK_RANLIB ?= $(WASI_SDK_PATH)/bin/llvm-ranlib
 WASI_SDK_SYSROOT ?= $(WASI_SDK_PATH)/share/wasi-sysroot
 
 $(WASI_SDK_SRC_TAR): | $(BUILD_DIR)
+	@echo "INFO: Downloading WASI SDK $(WASI_SDK_VERSION_FULL)..."
 	wget -qO $(WASI_SDK_SRC_TAR) https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-$(WASI_SDK_VERSION)/wasi-sdk-$(WASI_SDK_VERSION_FULL)-x86_64-linux.tar.gz
 	touch $(WASI_SDK_SRC_TAR)
 
 $(WASI_SDK_SRC_DIR): $(WASI_SDK_SRC_TAR)
+	@echo "INFO: Extracting WASI SDK $(WASI_SDK_VERSION_FULL)..."
 	mkdir -p $(WASI_SDK_PATH) && \
 	tar --strip-components 1 -xf $(WASI_SDK_SRC_TAR) -C $(WASI_SDK_PATH) && \
 	touch $(WASI_SDK_SRC_DIR) || \
