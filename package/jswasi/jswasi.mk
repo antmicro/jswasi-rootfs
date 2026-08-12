@@ -15,21 +15,20 @@ JSWASI_INDEX = $(JSWASI_DIST_DIR)/index.html
 JSWASI_MOTD = $(JSWASI_DIST_DIR)/resources/motd.txt
 JSWASI_HTERM = $(JSWASI_DIST_DIR)/third_party/hterm.js
 
-JSWASI_SYSCALLS_TEST_TARGET = $(JSWASI_SRC_DIR)/tests/syscalls/target/wasm32-wasip1/release/syscalls_test.wasm
+JSWASI_SYSCALLS_TEST_TARGET = $(JSWASI_SRC_DIR)/tests/syscalls/target/$(WASI_TARGET)/release/syscalls_test.wasm
 JSWASI_SYSCALLS_TEST_DIST := $(RESOURCES_DIR)/syscalls_test
 
 JSWASI_INSTALL_INDEX ?= 1
 
-
 $(eval $(call get-sources,JSWASI))
 $(eval $(call apply-patches,JSWASI))
-
 
 $(RESOURCES_DIR)/%: $(PACKAGE_DIR)/jswasi/% | $(RESOURCES_DIR)
 	cp $< $@
 
 $(JSWASI_SYSCALLS_TEST_TARGET): $(JSWASI_SRC_DIR) | RUST
-	CC="$(WASI_SDK_PATH)/bin/clang" $(CARGO) build --manifest-path $(JSWASI_SRC_DIR)/tests/syscalls/Cargo.toml --target wasm32-wasip1 --release
+	CC="$(WASI_SDK_CLANG)" $(CARGO) build --manifest-path $(JSWASI_SRC_DIR)/tests/syscalls/Cargo.toml --target $(WASI_TARGET) --release
+
 	wasm-strip $@
 
 $(JSWASI_SYSCALLS_TEST_DIST): $(JSWASI_SYSCALLS_TEST_TARGET) | $(RESOURCES_DIR)
