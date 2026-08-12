@@ -26,4 +26,9 @@ $(JQ_DIST): $(JQ_BUILD) | $(ROOTFS_DIR)
 .PHONY: JQ
 JQ: $(JQ_DIST)
 
+define JQ_CLEAN_CMDS_EXTRA
+	rm -f $(JQ_DIST) $(JQ_BUILD)
+endef
+
 $(eval $(call get-sources-git,JQ))
+

@@ -26,5 +26,10 @@ $(AGE_SRC_DIR)/.installed: $(AGE_BUILD_DIR)/age $(AGE_BUILD_DIR)/age-keygen | $(
 .PHONY: AGE
 AGE: $(AGE_SRC_DIR)/.installed
 
+define AGE_CLEAN_CMDS_EXTRA
+	rm -f $(ROOTFS_DIR)/usr/bin/age $(ROOTFS_DIR)/usr/bin/age-keygen
+endef
+
 $(eval $(call get-sources,AGE))
 $(eval $(call apply-patches,AGE))
+
