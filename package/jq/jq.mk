@@ -1,4 +1,4 @@
-JQ_DEPENDENCIES := WASI_SDK WASI_EXT_LIB
+JQ_DEPENDENCIES := WASI_SDK WASI_EXT_LIB SYSROOT
 JQ_PKG_NAME := jq
 
 JQ_SRC_REV := 585570cb5c8e6a514b9e4b6a419dbe0d9c80f3bb
@@ -9,14 +9,15 @@ JQ_BUILD := $(JQ_SRC_DIR)/jq
 JQ_DIST := $(ROOTFS_DIR)/usr/bin/jq
 
 $(JQ_BUILD): | $(JQ_SRC_DIR) $(JQ_DEPENDENCIES)
-	export CC="$(WASI_SDK_PATH)/bin/clang" && \
-	export CFLAGS="-O2 -D_WASI_EMULATED_SIGNAL -mthread-model single -mno-atomics -mno-bulk-memory -I $(WASI_EXT_LIB_INCLUDE_PATH) $(CFLAGS)" && \
-	export LDFLAGS="$(LDFLAGS) -L$(WASI_EXT_LIB_LD_PATH)" && \
+	export CC="$(WASI_SDK_CLANG)" && \
+	export CFLAGS="-O2 -D_WASI_EMULATED_SIGNAL -mthread-model single -mno-atomics -mno-bulk-memory -I $(SYSROOT_INC) $(CFLAGS)" && \
+	export LDFLAGS="$(LDFLAGS) -L$(SYSROOT_LIB)" && \
 	export LIBS="-Wl,--whole-archive,-lwasi_ext_lib,--no-whole-archive -lwasi-emulated-signal" && \
 	cd $(JQ_SRC_DIR) && \
 	autoreconf -i && \
-	./configure --host=wasm32-wasip1 --target=wasm32-wasip1 --disable-docs --disable-valgrind --disable-maintainer-mode --with-onigurama=builtin --prefix=/usr/local && \
+	./configure --host=$(WASI_TARGET) --target=$(WASI_TARGET) --disable-docs --disable-valgrind --disable-maintainer-mode --with-oniguruma=builtin --prefix=/usr/local && \
 	make -j$(shell nproc)
+
 	wasm-strip $@
 
 $(JQ_DIST): $(JQ_BUILD) | $(ROOTFS_DIR)
