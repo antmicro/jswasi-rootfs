@@ -1,4 +1,5 @@
-PYTHON_DEPENDENCIES := WASI_SDK WASI_EXT_LIB
+PYTHON_DEPENDENCIES := WASI_SDK WASI_EXT_LIB SYSROOT
+
 PYTHON_PKG_NAME := python
 
 PYTHON_SRC_REV := v3.14.5
@@ -13,22 +14,23 @@ PYTHON_BUILD = $(PYTHON_BUILD_DIR)/python
 PYTHON_PATCHES = $(wildcard $(PACKAGE_DIR)/python/*.patch)
 
 GNU_BUILD_PATH = $(PYTHON_SRC_DIR)/cross-build/x86_64-pc-linux-gnu
-TARGET_BUILD_PATH = $(PYTHON_SRC_DIR)/cross-build/wasm32-wasip1-threads
+TARGET_BUILD_PATH = $(PYTHON_SRC_DIR)/cross-build/$(WASI_TARGET_THREADS)
 TARGET_BUILD_LIB_PATH = $(TARGET_BUILD_PATH)/lib/python$(PYTHON_VERSION_NOPATCH)
 
 WASI_ENV = PKG_CONFIG_PATH= \
 		NIX_CFLAGS_COMPILE= \
-		AR=$(WASI_SDK_PATH)/bin/llvm-ar \
-		CC=$(WASI_SDK_PATH)/bin/clang \
+		AR=$(WASI_SDK_AR) \
+		CC=$(WASI_SDK_CLANG) \
 		CPP=$(WASI_SDK_PATH)/bin/clang-cpp \
 		CXX=$(WASI_SDK_PATH)/bin/clang++ \
-		CFLAGS="$${CFLAGS} -I$(WASI_EXT_LIB_INCLUDE_PATH)" \
+		CFLAGS="$${CFLAGS} -I$(SYSROOT_THREADS_INC) -I$(SYSROOT_INC)" \
 		CONFIG_SITE=$(PYTHON_SRC_DIR)/Tools/wasm/wasi/config.site-wasm32-wasi \
-		PKG_CONFIG_SYSROOT_DIR=$(WASI_SDK_PATH)/share/wasi-sysroot \
-		PKG_CONFIG_LIBDIR=$(WASI_SDK_PATH)/share/wasi-sysroot/lib/pkgconfig:$(WASI_SDK_PATH)/share/wasi-sysroot/share/pkgconfig \
-		RANLIB=$(WASI_SDK_PATH)/bin/ranlib \
-		WASI_SYSROOT=$(WASI_SDK_PATH)/share/wasi-sysroot \
-		LDFLAGS="$${LDFLAGS} -L$(WASI_EXT_LIB_LD_PATH) -Wl,--whole-archive -lwasi_ext_lib -Wl,--no-whole-archive"
+		PKG_CONFIG_SYSROOT_DIR=$(WASI_SDK_SYSROOT) \
+		PKG_CONFIG_LIBDIR=$(WASI_SDK_SYSROOT)/lib/pkgconfig:$(WASI_SDK_SYSROOT)/share/pkgconfig \
+		RANLIB=$(WASI_SDK_RANLIB) \
+		WASI_SYSROOT=$(WASI_SDK_SYSROOT) \
+		LDFLAGS="$${LDFLAGS} -L$(SYSROOT_THREADS_LIB) -L$(SYSROOT_LIB) -Wl,--whole-archive -lwasi_ext_lib -Wl,--no-whole-archive"
+
 
 $(eval $(call get-sources,PYTHON))
 
@@ -48,7 +50,7 @@ build_python_wasi: build_local_python $(PYTHON_DEPENDENCIES) $(PYTHON_SRC_DIR)/.
 	cd $(PYTHON_SRC_DIR) && \
 	sed -i 's|--max-memory=[0-9]*|--max-memory=4294967296|g' ./configure.ac && \
 	autoconf -f && \
-	$(WASI_ENV) ./configure --host=wasm32-wasip1 --build=x86_64-pc-linux-gnu --with-build-python=$(GNU_BUILD_PATH)/python \
+	$(WASI_ENV) ./configure --host=$(WASI_TARGET) --build=x86_64-pc-linux-gnu --with-build-python=$(GNU_BUILD_PATH)/python \
 		--enable-wasm-pthreads --with-ensurepip=no --disable-test-modules --disable-ipv6 \
 		--prefix=$(TARGET_BUILD_PATH) && \
 	make -j $(shell nproc) all && \
