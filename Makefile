@@ -20,7 +20,6 @@ include ./package/cargo-package.mk
 define PACKAGE_COMMON
 include $(1)/$(notdir $(1)).mk
 $(eval PACKAGES_ALL += $(notdir $(1)))
-
 endef
 
 define to_pkg_var
