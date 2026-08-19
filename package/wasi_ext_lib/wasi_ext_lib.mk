@@ -1,7 +1,7 @@
 WASI_EXT_LIB_DEPENDENCIES := WASI_SDK HOST_SYSROOT
 WASI_EXT_LIB_PKG_NAME := wasi_ext_lib
 
-WASI_EXT_LIB_SRC_REV := 2cc5fb079c97c67e9d014bc7fe84c39af10d5da8
+WASI_EXT_LIB_SRC_REV := 067db2ace9997d13af5709ffd8d66ecbbc7d5a52
 WASI_EXT_LIB_SRC_URL := $(call github_url,antmicro,wasi_ext_lib,$(WASI_EXT_LIB_SRC_REV))
 
 WASI_EXT_LIB_LIB := $(HOST_SYSROOT_LIB)/libwasi_ext_lib.a
