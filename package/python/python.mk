@@ -1,4 +1,4 @@
-PYTHON_DEPENDENCIES := WASI_SDK WASI_EXT_LIB SYSROOT
+PYTHON_DEPENDENCIES := WASI_SDK WASI_EXT_LIB HOST_SYSROOT
 
 PYTHON_PKG_NAME := python
 
@@ -23,13 +23,13 @@ WASI_ENV = PKG_CONFIG_PATH= \
 	CC=$(WASI_SDK_CLANG) \
 	CPP=$(WASI_SDK_PATH)/bin/clang-cpp \
 	CXX=$(WASI_SDK_PATH)/bin/clang++ \
-	CFLAGS="$${CFLAGS} -I$(SYSROOT_THREADS_INC) -I$(SYSROOT_INC)" \
+	CFLAGS="$${CFLAGS} -I$(HOST_SYSROOT_THREADS_INC) -I$(HOST_SYSROOT_INC)" \
 	CONFIG_SITE=$(PYTHON_SRC_DIR)/Tools/wasm/wasi/config.site-wasm32-wasi \
 	PKG_CONFIG_SYSROOT_DIR=$(WASI_SDK_SYSROOT) \
 	PKG_CONFIG_LIBDIR=$(WASI_SDK_SYSROOT)/lib/pkgconfig:$(WASI_SDK_SYSROOT)/share/pkgconfig \
 	RANLIB=$(WASI_SDK_RANLIB) \
 	WASI_SYSROOT=$(WASI_SDK_SYSROOT) \
-	LDFLAGS="$${LDFLAGS} -L$(SYSROOT_THREADS_LIB) -L$(SYSROOT_LIB) -Wl,--whole-archive -lwasi_ext_lib -Wl,--no-whole-archive"
+	LDFLAGS="$${LDFLAGS} -L$(HOST_SYSROOT_THREADS_LIB) -L$(HOST_SYSROOT_LIB) -Wl,--whole-archive -lwasi_ext_lib -Wl,--no-whole-archive"
 
 $(eval $(call get-sources,PYTHON))
 

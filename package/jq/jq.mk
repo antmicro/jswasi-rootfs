@@ -1,4 +1,4 @@
-JQ_DEPENDENCIES := WASI_SDK WASI_EXT_LIB SYSROOT
+JQ_DEPENDENCIES := WASI_SDK WASI_EXT_LIB HOST_SYSROOT
 JQ_PKG_NAME := jq
 
 JQ_SRC_REV := 585570cb5c8e6a514b9e4b6a419dbe0d9c80f3bb
@@ -10,8 +10,8 @@ JQ_DIST := $(ROOTFS_DIR)/usr/bin/jq
 
 $(JQ_BUILD): | $(JQ_SRC_DIR) $(JQ_DEPENDENCIES)
 	export CC="$(WASI_SDK_CLANG)" && \
-	export CFLAGS="-O2 -std=gnu99 -D_WASI_EMULATED_SIGNAL -mthread-model single -mno-atomics -mno-bulk-memory -Wno-incompatible-function-pointer-types -I $(SYSROOT_INC) $(CFLAGS)" && \
-	export LDFLAGS="$(LDFLAGS) -L$(SYSROOT_LIB)" && \
+	export CFLAGS="-O2 -std=gnu99 -D_WASI_EMULATED_SIGNAL -mthread-model single -mno-atomics -mno-bulk-memory -Wno-incompatible-function-pointer-types -I $(HOST_SYSROOT_INC) $(CFLAGS)" && \
+	export LDFLAGS="$(LDFLAGS) -L$(HOST_SYSROOT_LIB)" && \
 	export LIBS="-Wl,--whole-archive,-lwasi_ext_lib,--no-whole-archive -lwasi-emulated-signal" && \
 	cd $(JQ_SRC_DIR) && \
 	autoreconf -i && \
