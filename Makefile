@@ -18,6 +18,7 @@ include ./package/patch-sources.mk
 include ./package/cargo-package.mk
 
 define PACKAGE_COMMON
+$(call to_pkg_var,$(notdir $(1)))_PKG_DIR := $(1)
 include $(1)/$(notdir $(1)).mk
 $(eval PACKAGES_ALL += $(notdir $(1)))
 endef

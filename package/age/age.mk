@@ -5,7 +5,6 @@ AGE_SRC_URL := $(call github_url,FiloSottile,age,$(AGE_SRC_REV))
 AGE_SRC_DIR := $(BUILD_DIR)/age-$(AGE_SRC_REV)
 
 AGE_BUILD_DIR = $(AGE_SRC_DIR)/build
-AGE_PATCHES = $(wildcard $(PACKAGE_DIR)/age/*.patch)
 
 $(AGE_BUILD_DIR): | $(AGE_SRC_DIR)
 	mkdir -p $@

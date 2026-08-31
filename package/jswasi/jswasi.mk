@@ -6,10 +6,8 @@ JSWASI_SRC_URL := $(call github_url,antmicro,jswasi,$(JSWASI_SRC_REV))
 
 JSWASI_DIST_DIR = $(JSWASI_SRC_DIR)/dist
 
-JSWASI_PATCHES := $(PACKAGE_DIR)/jswasi/init.patch
-
-JSWASI_CONFIG := $(PACKAGE_DIR)/jswasi/config.json
-JSWASI_VFS_CONFIG := $(PACKAGE_DIR)/jswasi/vfs_config.json
+JSWASI_CONFIG := $(JSWASI_PKG_DIR)/config.json
+JSWASI_VFS_CONFIG := $(JSWASI_PKG_DIR)/vfs_config.json
 
 JSWASI_INDEX = $(JSWASI_DIST_DIR)/index.html
 JSWASI_MOTD = $(JSWASI_DIST_DIR)/resources/motd.txt
@@ -23,7 +21,7 @@ JSWASI_INSTALL_INDEX ?= 1
 $(eval $(call get-sources,JSWASI))
 $(eval $(call apply-patches,JSWASI))
 
-$(RESOURCES_DIR)/%: $(PACKAGE_DIR)/jswasi/% | $(RESOURCES_DIR)
+$(RESOURCES_DIR)/%: $(JSWASI_PKG_DIR)/% | $(RESOURCES_DIR)
 	cp $< $@
 
 $(JSWASI_SYSCALLS_TEST_TARGET): $(JSWASI_SRC_DIR) | RUST

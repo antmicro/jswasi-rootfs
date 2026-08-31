@@ -6,7 +6,6 @@ RUST_SRC_URL := https://github.com/rust-lang/rust.git
 RUST_SRC_DIR := $(BUILD_DIR)/rust-$(RUST_SRC_REV)
 
 RUST_CONFIG := $(RUST_SRC_DIR)/bootstrap.toml
-RUST_PATCHES := $(wildcard $(PACKAGE_DIR)/rust/*.patch)
 
 RUST_TOOLCHAIN = $(RUST_SRC_DIR)/build/host/stage1
 CARGO = WASI_SDK_PATH=$(WASI_SDK_PATH) cargo +wasi_extended

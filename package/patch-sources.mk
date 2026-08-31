@@ -1,5 +1,7 @@
 define apply-patches
 
+$(eval $(1)_PATCHES ?= $(sort $(wildcard $($(1)_PKG_DIR)/*.patch)))
+
 $($(1)_SRC_DIR)/.patched: $($(1)_PATCHES) | $($(1)_SRC_DIR)
 	@echo "INFO: Applying patches for $(1)..."
 	cd $($(1)_SRC_DIR) && \

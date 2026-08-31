@@ -6,15 +6,13 @@ SPACE_INVADERS_SRC_URL := $(call github_url,mia1024,space-invaders,$(SPACE_INVAD
 
 SPACE_INVADERS_DIST := $(ROOTFS_DIR)/usr/local/bin/space-invaders
 
-SPACE_INVADERS_PATCHES := $(wildcard $(PACKAGE_DIR)/space-invaders/*.patch)
-
 define SPACE_INVADERS_SRC_DIR_CMDS
 	@unzip -od $(BUILD_DIR) $(SPACE_INVADERS_SRC_ZIP)
 	@rm $(SPACE_INVADERS_SRC_DIR)/Cargo.lock
 endef
 
 define SPACE_INVADERS_INSTALL_CMDS_EXTRA
-	$(INSTALL) -D $(PACKAGE_DIR)/space-invaders/config.ini $(ROOTFS_DIR)/etc/space-invaders/config.ini
+	$(INSTALL) -D $(SPACE_INVADERS_PKG_DIR)/config.ini $(ROOTFS_DIR)/etc/space-invaders/config.ini
 endef
 
 $(eval $(call get-sources,SPACE_INVADERS))
