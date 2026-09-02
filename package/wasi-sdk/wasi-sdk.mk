@@ -5,10 +5,10 @@ WASI_SDK_SRC_DIR := $(BUILD_DIR)/wasi-sdk-$(WASI_SDK_VERSION_FULL)
 WASI_SDK_PATH = $(WASI_SDK_SRC_DIR)
 
 # Common WASI_SDK toolchain binary definitions
-WASI_SDK_CLANG ?= $(WASI_SDK_PATH)/bin/clang
-WASI_SDK_AR ?= $(WASI_SDK_PATH)/bin/llvm-ar
-WASI_SDK_RANLIB ?= $(WASI_SDK_PATH)/bin/llvm-ranlib
-WASI_SDK_SYSROOT ?= $(WASI_SDK_PATH)/share/wasi-sysroot
+WASI_SDK_CLANG = $(WASI_SDK_PATH)/bin/clang
+WASI_SDK_AR = $(WASI_SDK_PATH)/bin/llvm-ar
+WASI_SDK_RANLIB = $(WASI_SDK_PATH)/bin/llvm-ranlib
+WASI_SDK_SYSROOT = $(WASI_SDK_PATH)/share/wasi-sysroot
 
 $(WASI_SDK_SRC_TAR): | $(BUILD_DIR)
 	@echo "INFO: Downloading WASI SDK $(WASI_SDK_VERSION_FULL)..."
