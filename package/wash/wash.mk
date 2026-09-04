@@ -11,7 +11,7 @@ WASH_INSTALL_INIT_SERVICE ?= 1
 
 define WASH_INSTALL_CMDS_EXTRA
 	if [ "$(WASH_INSTALL_INIT_SERVICE)" = "1" ]; then $(INSTALL) -D $(WASH_PKG_DIR)/wash.service.json $(ROOTFS_DIR)/etc/init.d/wash.service.json; fi
-endef  # WASH_INSTALL_CMDS_EXTRA
+endef
 
 $(eval $(call get-sources,WASH))
 $(eval $(call cargo-package,WASH))
